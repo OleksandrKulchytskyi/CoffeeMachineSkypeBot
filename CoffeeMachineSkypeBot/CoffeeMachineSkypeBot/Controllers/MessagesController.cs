@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -42,10 +43,23 @@ namespace CoffeeMachineSkypeBot
 			}
 			else
 			{
+				HandleMembers(activity);
 				HandleSystemMessage(activity);
 			}
+
 			var response = Request.CreateResponse(HttpStatusCode.OK);
 			return response;
+		}
+
+		private void HandleMembers(Activity activity)
+		{
+			if (activity.MembersAdded.Any())
+			{
+			}
+
+			if (activity.MembersRemoved.Any())
+			{
+			}
 		}
 
 		private Activity HandleSystemMessage(Activity message)
