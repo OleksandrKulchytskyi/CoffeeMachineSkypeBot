@@ -31,8 +31,9 @@ namespace CoffeeMachineSkypeBot
 
 				if (commandHandler.CanHandle(activity.Text))
 				{
-					var username = activity.From.Name;
+					var username = activity.From == null ? String.Empty : activity.From.Name;
 					var result = commandHandler.HandleCommand(activity.Text, username);
+
 					Activity commandReply = activity.CreateReply(result);
 					await connector.Conversations.ReplyToActivityAsync(commandReply);
 				}
@@ -53,11 +54,11 @@ namespace CoffeeMachineSkypeBot
 
 		private void HandleMembers(Activity activity)
 		{
-			if (activity.MembersAdded.Any())
+			if (activity.MembersAdded != null && activity.MembersAdded.Any())
 			{
 			}
 
-			if (activity.MembersRemoved.Any())
+			if (activity.MembersRemoved != null && activity.MembersRemoved.Any())
 			{
 			}
 		}
