@@ -4,12 +4,20 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Connector;
+using CoffeeMachine.Abstraction;
 
 namespace CoffeeMachineSkypeBot
 {
 	[BotAuthentication]
 	public class MessagesController : ApiController
 	{
+		private readonly ICommandHandler commandHandler;
+
+		public MessagesController(ICommandHandler optionHandler)
+		{
+			this.commandHandler = optionHandler;
+		}
+
 		/// <summary>
 		/// POST: api/Messages
 		/// Receive a message from a user and reply to it
@@ -19,6 +27,14 @@ namespace CoffeeMachineSkypeBot
 			if (activity.Type == ActivityTypes.Message)
 			{
 				ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+
+				if (commandHandler.CanHandle(activity.Text))
+				{
+					var username = activity.From.Name;
+					var result = commandHandler.HandleCommand(activity.Text, username);
+					Activity commandReply = activity.CreateReply(result);
+					await connector.Conversations.ReplyToActivityAsync(commandReply);
+				}
 
 				// return our reply to the user
 				Activity reply = activity.CreateReply($"You sent to CoffeeMachine next message: {activity.Text}");

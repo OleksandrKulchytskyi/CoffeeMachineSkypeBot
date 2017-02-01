@@ -135,6 +135,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoffeeMachine.Abstraction\CoffeeMachine.Abstraction.csproj">
+      <Project>{d75dafa4-5dba-4bd3-9fbd-b8ff58f9bb2d}</Project>
+      <Name>CoffeeMachine.Abstraction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoffeeMachine.Infrastructure\CoffeeMachine.Infrastructure.csproj">
+      <Project>{fad4e055-8c47-48ef-a2f5-6ae6caf6317f}</Project>
+      <Name>CoffeeMachine.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
