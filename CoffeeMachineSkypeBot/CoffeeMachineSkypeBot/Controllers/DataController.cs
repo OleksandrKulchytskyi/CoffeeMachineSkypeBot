@@ -5,22 +5,22 @@ using System.Web.Http.Results;
 
 namespace CoffeeMachineSkypeBot.Controllers
 {
-	public class DataController : ApiController
+	public class CommandController : ApiController
 	{
-		private readonly IDataRetrieval dataService;
+		private readonly ICommandHandler commandHandler;
 
-		public DataController(IDataRetrieval dalService)
+		public CommandController(ICommandHandler commandHandler)
 		{
-			dataService = dalService;
+			this.commandHandler = commandHandler;
 		}
 
 		[HttpGet]
 		public ResponseMessageResult Get(string uid)
 		{
-			var result = dataService.Aggregate(uid, AggregationType.None);
+			var result = commandHandler.CanHandle(uid);
 			var msg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
 			{
-				Content = new StringContent($"User - {uid} with result- {result}")
+				Content = new StringContent($"Command - {uid} is operable - {result}")
 			};
 			return ResponseMessage(msg);
 		}
