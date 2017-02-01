@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Autofac;
+using Autofac.Integration.WebApi;
+using CoffeeMachine.Abstraction;
+using CoffeeMachine.Infrastructure;
+using System.Reflection;
 using System.Web.Http;
-using System.Web.Routing;
 
 namespace CoffeeMachineSkypeBot
 {
@@ -11,7 +11,22 @@ namespace CoffeeMachineSkypeBot
 	{
 		protected void Application_Start()
 		{
+			var builder = new ContainerBuilder();
+
+			ConfigureBuilder(builder);
+
+			var container = builder.Build();
+			GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
 			GlobalConfiguration.Configure(WebApiConfig.Register);
+		}
+
+		private static void ConfigureBuilder(ContainerBuilder builder)
+		{
+			builder.RegisterType<CommandHandler>().As<ICommandHandler>();
+			builder.RegisterType<DataRetrieval>().As<IDataRetrieval>();
+
+			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 		}
 	}
 }

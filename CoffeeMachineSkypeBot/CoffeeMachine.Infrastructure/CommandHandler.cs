@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 namespace CoffeeMachine.Infrastructure
 {
-	public class CommandHadler : ICommandHandler
+	public class CommandHandler : ICommandHandler
 	{
 		private const string NoCountMessage = "System is unable to retrieve information";
+
 		private readonly IDataRetrieval dataService;
 		private readonly Dictionary<string, Func<string, string>> comandHandlers;
 
-		public CommandHadler(IDataRetrieval dalService)
+		public CommandHandler(IDataRetrieval dalService)
 		{
 			dataService = dalService;
 
@@ -19,6 +20,24 @@ namespace CoffeeMachine.Infrastructure
 			comandHandlers.Add("month", HandleMonthCommand);
 			comandHandlers.Add("year", HandleYearCommand);
 		}
+
+		public bool CanHandle(string command)
+		{
+			return comandHandlers.ContainsKey(command);
+		}
+
+		public string HandleCommand(string command, string uid)
+		{
+			command = command.ToLower().Trim();
+
+			if (CanHandle(command))
+			{
+				return comandHandlers[command](uid);
+			}
+
+			return String.Empty;
+		}
+
 		#region Private
 
 		private string HandleDayCommand(string uid)
@@ -44,24 +63,8 @@ namespace CoffeeMachine.Infrastructure
 				return $"User - {uid} has made - {count} cup(s)";
 			}
 			return NoCountMessage;
-		} 
+		}
+
 		#endregion
-
-		public bool CanHandle(string command)
-		{
-			return comandHandlers.ContainsKey(command);
-		}
-
-		public string HandleCommand(string command, string uid)
-		{
-			command = command.ToLower().Trim();
-
-			if (CanHandle(command))
-			{
-				return comandHandlers[command](uid);
-			}
-
-			return String.Empty;
-		}
 	}
 }
