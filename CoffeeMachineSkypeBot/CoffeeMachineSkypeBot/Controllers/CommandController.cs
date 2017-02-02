@@ -18,10 +18,15 @@ namespace CoffeeMachineSkypeBot.Controllers
 		}
 
 		[HttpGet]
-		public ResponseMessageResult Get(string uid)
+		public HttpResponseMessage ApprovePending()
 		{
 			dataService.InitializeApprovedUsers();
+			return Request.CreateResponse(System.Net.HttpStatusCode.OK);
+		}
 
+		[HttpGet]
+		public ResponseMessageResult Get(string uid)
+		{
 			var result = commandHandler.CanHandle(uid);
 			var msg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
 			{
