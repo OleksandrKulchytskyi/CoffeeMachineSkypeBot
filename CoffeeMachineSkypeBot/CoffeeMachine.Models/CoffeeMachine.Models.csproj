@@ -43,6 +43,7 @@
     <Compile Include="ApprovalQueue.cs" />
     <Compile Include="EntitiyBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="UserActitvity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

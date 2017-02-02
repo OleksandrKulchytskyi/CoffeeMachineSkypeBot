@@ -17,7 +17,7 @@ namespace CoffeeMachine.Infrastructure
 		{
 			get
 			{
-				return protector.Decrypt(decryptedValue, "coffemachine");
+				return protector.Decrypt(decryptedValue, "coffeemachine");
 			}
 		}
 	}

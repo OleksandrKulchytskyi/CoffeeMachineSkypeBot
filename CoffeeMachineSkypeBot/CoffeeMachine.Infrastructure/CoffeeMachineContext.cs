@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CoffeeMachine.Abstraction;
+using CoffeeMachine.Models;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoffeeMachine.Infrastructure
 {
 	public class CoffeeMachineContext : DbContext
 	{
-		public CoffeeMachineContext() : base()
+		private readonly IConnection connection;
+		public CoffeeMachineContext(IConnection connection) :
+			base(connection.ConnectionText)
 		{
-
+			this.connection = connection;
+			this.Configuration.LazyLoadingEnabled = false;
+			this.Configuration.ProxyCreationEnabled = false;
 		}
 
+		public IDbSet<ApprovalQueue> ApprovalQueue { get; set; }
+
+		public IDbSet<User> Users { get; set; }
+
+		public IDbSet<UserActitvity> UserActivity { get; set; }
 	}
 }

@@ -91,7 +91,7 @@ namespace CoffeeMachine.Infrastructure
 			}
 		}
 
-		private static byte[] Generate256BitsOfRandomEntropy()
+		private byte[] Generate256BitsOfRandomEntropy()
 		{
 			var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
 			using (var rngCsp = new RNGCryptoServiceProvider())

@@ -39,6 +39,9 @@ namespace CoffeeMachineSkypeBot
 											})
 					.InstancePerRequest();
 
+			builder.RegisterType<CoffeeMachineContext>().As<CoffeeMachineContext>()
+					.InstancePerRequest();
+
 			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 		}
 	}
