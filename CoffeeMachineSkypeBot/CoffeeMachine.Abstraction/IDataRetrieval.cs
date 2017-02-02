@@ -2,10 +2,12 @@
 {
 	public interface IDataService
 	{
+		void AddActivity(string uid);
+
 		int? Aggregate(string uid, AggregationType type);
 
 		void AddToApprovalQueue(string uid);
 
-		void AddActivity(string uid);
+		void InitializeApprovedUsers();
 	}
 }
