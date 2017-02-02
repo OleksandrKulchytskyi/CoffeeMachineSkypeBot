@@ -10,11 +10,11 @@ namespace CoffeeMachine.Infrastructure
 	{
 		private readonly IConnection connection;
 
-		public CoffeeMachineContext() :
-			base("name = CoffeeMachineConnection")
-		{
+		//public CoffeeMachineContext() :
+		//	base("name = CoffeeMachineConnection")
+		//{
 
-		}
+		//}
 
 		public CoffeeMachineContext(IConnection connection) :
 			base(connection.ConnectionText)
