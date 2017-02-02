@@ -24,5 +24,5 @@ namespace CoffeeMachineSkypeBot.Controllers
 			};
 			return ResponseMessage(msg);
 		}
-}
+	}
 }

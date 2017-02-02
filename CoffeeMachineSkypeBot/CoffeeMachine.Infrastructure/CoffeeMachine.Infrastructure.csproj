@@ -31,7 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http.WebRequest" />
@@ -43,15 +52,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoffeeMachineContext.cs" />
     <Compile Include="CommandHandler.cs" />
+    <Compile Include="ConnectionProducer.cs" />
     <Compile Include="DataRetrieval.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringProtector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoffeeMachine.Abstraction\CoffeeMachine.Abstraction.csproj">
       <Project>{d75dafa4-5dba-4bd3-9fbd-b8ff58f9bb2d}</Project>
       <Name>CoffeeMachine.Abstraction</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CoffeeMachine.Models\CoffeeMachine.Models.csproj">
+      <Project>{27a3b984-2631-436b-9450-79af8db14908}</Project>
+      <Name>CoffeeMachine.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

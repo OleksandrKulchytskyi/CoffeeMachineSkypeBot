@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachine.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachine.Abstraction", "CoffeeMachine.Abstraction\CoffeeMachine.Abstraction.csproj", "{D75DAFA4-5DBA-4BD3-9FBD-B8FF58F9BB2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachine.Models", "CoffeeMachine.Models\CoffeeMachine.Models.csproj", "{27A3B984-2631-436B-9450-79AF8DB14908}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D75DAFA4-5DBA-4BD3-9FBD-B8FF58F9BB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D75DAFA4-5DBA-4BD3-9FBD-B8FF58F9BB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D75DAFA4-5DBA-4BD3-9FBD-B8FF58F9BB2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A3B984-2631-436B-9450-79AF8DB14908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A3B984-2631-436B-9450-79AF8DB14908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A3B984-2631-436B-9450-79AF8DB14908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A3B984-2631-436B-9450-79AF8DB14908}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

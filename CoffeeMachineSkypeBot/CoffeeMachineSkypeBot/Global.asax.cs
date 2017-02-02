@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using Autofac.Core;
 using Autofac.Integration.WebApi;
 using CoffeeMachine.Abstraction;
 using CoffeeMachine.Infrastructure;
 using System.Reflection;
+using System.Web.Configuration;
 using System.Web.Http;
 
 namespace CoffeeMachineSkypeBot
@@ -16,6 +18,7 @@ namespace CoffeeMachineSkypeBot
 			ConfigureBuilder(builder);
 
 			var container = builder.Build();
+
 			GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
 			GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -23,8 +26,18 @@ namespace CoffeeMachineSkypeBot
 
 		private static void ConfigureBuilder(ContainerBuilder builder)
 		{
-			builder.RegisterType<CommandHandler>().As<ICommandHandler>();
-			builder.RegisterType<DataRetrieval>().As<IDataRetrieval>();
+			builder.RegisterType<CommandHandler>().As<ICommandHandler>()
+					.InstancePerRequest();
+			builder.RegisterType<DataRetrieval>().As<IDataService>()
+					.InstancePerRequest();
+			builder.RegisterType<StringDataProtector>().As<IDataProtector>()
+					.InstancePerLifetimeScope();
+
+			builder.RegisterType<ConnectionProducer>().As<IConnection>()
+					.WithParameters(new[] { new ResolvedParameter((p, c) => p.Name == "protector", (p, c) => c.Resolve<IDataProtector>()),
+											new ResolvedParameter((p,c)=> p.Name=="decrypted",(p,c)=> WebConfigurationManager.AppSettings["decrypted"])
+											})
+					.InstancePerRequest();
 
 			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 		}

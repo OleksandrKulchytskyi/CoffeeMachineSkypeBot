@@ -8,10 +8,10 @@ namespace CoffeeMachine.Infrastructure
 	{
 		private const string NoCountMessage = "System is unable to retrieve information";
 
-		private readonly IDataRetrieval dataService;
+		private readonly IDataService dataService;
 		private readonly Dictionary<string, Func<string, string>> comandHandlers;
 
-		public CommandHandler(IDataRetrieval dalService)
+		public CommandHandler(IDataService dalService)
 		{
 			dataService = dalService;
 
