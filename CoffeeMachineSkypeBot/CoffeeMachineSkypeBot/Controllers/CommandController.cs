@@ -8,15 +8,20 @@ namespace CoffeeMachineSkypeBot.Controllers
 	public class CommandController : ApiController
 	{
 		private readonly ICommandHandler commandHandler;
+		private readonly IDataService dataService;
 
-		public CommandController(ICommandHandler commandHandler)
+		public CommandController(ICommandHandler commandHandler,
+								IDataService dataService)
 		{
 			this.commandHandler = commandHandler;
+			this.dataService = dataService;
 		}
 
 		[HttpGet]
 		public ResponseMessageResult Get(string uid)
 		{
+			dataService.InitializeApprovedUsers();
+
 			var result = commandHandler.CanHandle(uid);
 			var msg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
 			{
