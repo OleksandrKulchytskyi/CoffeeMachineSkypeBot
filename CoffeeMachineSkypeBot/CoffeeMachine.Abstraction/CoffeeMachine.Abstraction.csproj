@@ -40,12 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddUserRequest.cs" />
     <Compile Include="AggregationType.cs" />
     <Compile Include="ICommandHandler.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IDataRetrieval.cs" />
     <Compile Include="IDataProtector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoffeeMachine.Models\CoffeeMachine.Models.csproj">
+      <Project>{27a3b984-2631-436b-9450-79af8db14908}</Project>
+      <Name>CoffeeMachine.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

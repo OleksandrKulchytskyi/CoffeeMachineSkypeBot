@@ -6,8 +6,12 @@ namespace CoffeeMachine.Models
 {
 	public class User : EntitiyBase
 	{
+		[Required]
 		[StringLength(100)]
 		public string UserName { get; set; }
+
+		[StringLength(100)]
+		public string UserDescription { get; set; }
 
 		public DateTime CreatedOn { get; set; }
 

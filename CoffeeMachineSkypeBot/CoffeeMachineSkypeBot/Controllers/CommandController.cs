@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Linq;
 
 namespace CoffeeMachineSkypeBot.Controllers
 {
@@ -18,10 +19,12 @@ namespace CoffeeMachineSkypeBot.Controllers
 		}
 
 		[HttpGet]
-		public HttpResponseMessage ApprovePending()
+		public HttpResponseMessage GetPendingApproval()
 		{
-			dataService.InitializeApprovedUsers();
-			return Request.CreateResponse(System.Net.HttpStatusCode.OK);
+			var users = dataService.GetUsersForApprove()
+									.Select(x => new { Id = x.Id, UserId = x.UserId, UserName = x.UserName })
+									.ToArray();
+			return Request.CreateResponse(System.Net.HttpStatusCode.OK, users);
 		}
 
 		[HttpGet]
@@ -34,5 +37,13 @@ namespace CoffeeMachineSkypeBot.Controllers
 			};
 			return ResponseMessage(msg);
 		}
+
+		[HttpPost]
+		public HttpResponseMessage ApprovePending()
+		{
+			dataService.InitializeApprovedUsers();
+			return Request.CreateResponse(System.Net.HttpStatusCode.OK);
+		}
+
 	}
 }

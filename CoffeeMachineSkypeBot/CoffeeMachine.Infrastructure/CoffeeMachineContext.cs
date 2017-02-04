@@ -13,7 +13,6 @@ namespace CoffeeMachine.Infrastructure
 		//public CoffeeMachineContext() :
 		//	base("name = CoffeeMachineConnection")
 		//{
-
 		//}
 
 		public CoffeeMachineContext(IConnection connection) :

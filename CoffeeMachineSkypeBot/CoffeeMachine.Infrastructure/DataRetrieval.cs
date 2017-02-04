@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CoffeeMachine.Abstraction;
+using CoffeeMachine.Models;
 
 namespace CoffeeMachine.Infrastructure
 {
@@ -24,14 +26,32 @@ namespace CoffeeMachine.Infrastructure
 			dbContext.SaveChanges();
 		}
 
-		public void AddToApprovalQueue(string uid)
+		public void AddUserForApprovalQueue(IEnumerable<AddUserRequest> members)
 		{
-			var existed = dbContext.ApprovalQueue.FirstOrDefault(x => x.UserName == uid && !x.Approved);
-			if (existed == null)
+			var userIds = members.Select(x => x.UserId).ToArray();
+			var existed = dbContext.ApprovalQueue.Where(x => userIds.Contains(x.UserId))
+												.ToArray();
+			if (existed.Any())
 			{
-				dbContext.ApprovalQueue.Add(new Models.ApprovalQueue { UserName = uid, Approved = false });
-				dbContext.SaveChanges();
+				foreach (var user in existed)
+				{
+					user.Approved = false;
+				}
 			}
+			else
+			{
+				foreach (var user in members)
+				{
+					dbContext.ApprovalQueue.Add(new ApprovalQueue()
+					{
+						UserId = user.UserId,
+						UserName = user.UserName,
+						Approved = false
+					});
+				}
+			}
+
+			dbContext.SaveChanges();
 		}
 
 		public int? Aggregate(string uid, AggregationType type)
@@ -63,10 +83,19 @@ namespace CoffeeMachine.Infrastructure
 			//}
 		}
 
+		public IEnumerable<ApprovalQueue> GetUsersForApprove()
+		{
+			dbContext.Configuration.AutoDetectChangesEnabled = false;
+
+			var usersToApprove = dbContext.ApprovalQueue.Where(x => !x.Approved)
+												  .ToArray();
+			return usersToApprove;
+		}
+
 		public void InitializeApprovedUsers()
 		{
 			var approved = dbContext.ApprovalQueue.Where(x => x.Approved)
-													.Select(x => x.UserName)
+													.Select(x => new { UserId = x.UserId, UserName = x.UserName })
 													.ToArray();
 
 			if (approved.Any())
@@ -74,7 +103,13 @@ namespace CoffeeMachine.Infrastructure
 				DateTime createdOn = DateTime.UtcNow;
 				foreach (var user in approved)
 				{
-					dbContext.Users.Add(new Models.User { Active = true, UserName = user, CreatedOn = createdOn });
+					dbContext.Users.Add(new Models.User
+					{
+						Active = true,
+						UserName = user.UserId,
+						UserDescription = user.UserName,
+						CreatedOn = createdOn
+					});
 					dbContext.SaveChanges();
 				}
 			}

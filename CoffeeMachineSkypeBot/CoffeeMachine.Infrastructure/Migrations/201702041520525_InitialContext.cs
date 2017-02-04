@@ -1,5 +1,6 @@
 namespace CoffeeMachine.Infrastructure.Migrations
 {
+	using System;
 	using System.Data.Entity.Migrations;
 
 	public partial class InitialContext : DbMigration
@@ -11,6 +12,7 @@ namespace CoffeeMachine.Infrastructure.Migrations
 				c => new
 				{
 					Id = c.Int(nullable: false, identity: true),
+					UserId = c.String(nullable: false, maxLength: 100),
 					UserName = c.String(maxLength: 100),
 					Approved = c.Boolean(nullable: false),
 				})
@@ -34,7 +36,8 @@ namespace CoffeeMachine.Infrastructure.Migrations
 				c => new
 				{
 					Id = c.Int(nullable: false, identity: true),
-					UserName = c.String(maxLength: 100),
+					UserName = c.String(nullable: false, maxLength: 100),
+					UserDescription = c.String(maxLength: 100),
 					CreatedOn = c.DateTime(nullable: false),
 					Active = c.Boolean(nullable: false),
 				})

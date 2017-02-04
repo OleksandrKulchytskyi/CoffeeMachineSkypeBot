@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachine.Models", "Cof
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachine.Tests", "UnitTestProject1\CoffeeMachine.Tests.csproj", "{B71F62E8-6625-4F2B-9BFB-3639376A1E43}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL_Deliverables", "SQL_Deliverables", "{3F8FA257-CA41-49DD-9662-5A12A55D95DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLs", "SQLs", "{3DEE8F58-8AFA-4CF2-853A-93F570AE8034}"
+	ProjectSection(SolutionItems) = preProject
+		SQLs\04.02.2014_InitialContext.sql = SQLs\04.02.2014_InitialContext.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +49,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3DEE8F58-8AFA-4CF2-853A-93F570AE8034} = {3F8FA257-CA41-49DD-9662-5A12A55D95DE}
 	EndGlobalSection
 EndGlobal

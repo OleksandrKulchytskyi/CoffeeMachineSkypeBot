@@ -13,7 +13,7 @@ namespace CoffeeMachine.Infrastructure.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201702022125392_InitialContext"; }
+            get { return "201702041520525_InitialContext"; }
         }
         
         string IMigrationMetadata.Source

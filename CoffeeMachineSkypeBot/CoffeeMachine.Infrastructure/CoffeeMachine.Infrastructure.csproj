@@ -56,9 +56,9 @@
     <Compile Include="CommandHandler.cs" />
     <Compile Include="ConnectionProducer.cs" />
     <Compile Include="DataRetrieval.cs" />
-    <Compile Include="Migrations\201702022125392_InitialContext.cs" />
-    <Compile Include="Migrations\201702022125392_InitialContext.Designer.cs">
-      <DependentUpon>201702022125392_InitialContext.cs</DependentUpon>
+    <Compile Include="Migrations\201702041520525_InitialContext.cs" />
+    <Compile Include="Migrations\201702041520525_InitialContext.Designer.cs">
+      <DependentUpon>201702041520525_InitialContext.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,8 +79,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702022125392_InitialContext.resx">
-      <DependentUpon>201702022125392_InitialContext.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702041520525_InitialContext.resx">
+      <DependentUpon>201702041520525_InitialContext.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
