@@ -1,8 +1,8 @@
 ﻿using CoffeeMachine.Abstraction;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Linq;
 
 namespace CoffeeMachineSkypeBot.Controllers
 {
@@ -22,7 +22,7 @@ namespace CoffeeMachineSkypeBot.Controllers
 		public HttpResponseMessage GetPendingApproval()
 		{
 			var users = dataService.GetUsersForApprove()
-									.Select(x => new { Id = x.Id, UserId = x.UserId, UserName = x.UserName })
+									.Select(x => new DTOs.PendingUsersResponse { Id = x.Id, UserId = x.UserId, UserName = x.UserName })
 									.ToArray();
 			return Request.CreateResponse(System.Net.HttpStatusCode.OK, users);
 		}
