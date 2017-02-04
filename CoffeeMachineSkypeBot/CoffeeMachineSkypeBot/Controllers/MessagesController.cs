@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Connector;
 using CoffeeMachine.Abstraction;
+using CoffeeMachine.Abstraction.Models;
 
 namespace CoffeeMachineSkypeBot
 {
@@ -31,22 +32,31 @@ namespace CoffeeMachineSkypeBot
 			if (activity.Type == ActivityTypes.Message)
 			{
 				var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+				var uid = activity.From == null ? String.Empty : activity.From.Id;
 
-				if (commandHandler.CanHandle(activity.Text))
+				UserStatus status = dataService.CheckUserStatus(uid);
+				if (status == UserStatus.PendindApproval)
 				{
-					var username = activity.From == null ?
-									String.Empty : activity.From.Id;
-					var result = commandHandler.HandleCommand(activity.Text, username);
+					var msg = $"Sorry your user [{activity.From.Name}] wasn't approved by the system administrator.";
+					return await SendMessageToActivityAsync(activity, connector, msg);
+				}
+				else if (status == UserStatus.Inactive)
+				{
+					var msg = $"Sorry your user  [{activity.From.Name}] is disabled in the system.";
+					return await SendMessageToActivityAsync(activity, connector, msg);
+				}
 
-					var commandReply = activity.CreateReply(result, "en");
-					await connector.Conversations.ReplyToActivityAsync(commandReply);
+				if (commandHandler.CanHandle(activity.Text) &&
+					status == UserStatus.Active)
+				{
+					var result = commandHandler.HandleCommand(activity.Text, uid);
+					await SendMessageToActivityAsync(activity, connector, result);
 					return Request.CreateResponse(HttpStatusCode.OK);
 				}
 				else
 				{
 					// return our reply to the user
-					var reply = activity.CreateReply($"You sent unsupported command to CoffeeMachine: {activity.Text}");
-					await connector.Conversations.ReplyToActivityAsync(reply);
+					await SendMessageToActivityAsync(activity, connector, $"You sent to CoffeeMachine bot unsupported command: {activity.Text}");
 				}
 			}
 			else
@@ -54,6 +64,12 @@ namespace CoffeeMachineSkypeBot
 				HandleSystemMessage(activity);
 			}
 
+			return Request.CreateResponse(HttpStatusCode.OK);
+		}
+
+		private async Task<HttpResponseMessage> SendMessageToActivityAsync(Activity activity, ConnectorClient connector, string msg)
+		{
+			await connector.Conversations.ReplyToActivityAsync(activity.CreateReply(msg, "en"));
 			return Request.CreateResponse(HttpStatusCode.OK);
 		}
 
@@ -94,7 +110,11 @@ namespace CoffeeMachineSkypeBot
 				if (activity.MembersAdded != null &&
 					activity.MembersAdded.Any())
 				{
-					var users = activity.MembersAdded.Select(x => new AddUserRequest { UserId = x.Id, UserName = x.Name })
+					var users = activity.MembersAdded.Select(x => new AddUserRequest
+					{
+						UserId = x.Id,
+						UserName = x.Name
+					})
 													.ToArray();
 					dataService.AddUserForApprovalQueue(users);
 				}

@@ -12,7 +12,7 @@ namespace CoffeeMachineSkypeBot.Controllers
 		private readonly IDataService dataService;
 
 		public CommandController(ICommandHandler commandHandler,
-								IDataService dataService)
+								 IDataService dataService)
 		{
 			this.commandHandler = commandHandler;
 			this.dataService = dataService;
@@ -44,6 +44,5 @@ namespace CoffeeMachineSkypeBot.Controllers
 			dataService.InitializeApprovedUsers();
 			return Request.CreateResponse(System.Net.HttpStatusCode.OK);
 		}
-
 	}
 }

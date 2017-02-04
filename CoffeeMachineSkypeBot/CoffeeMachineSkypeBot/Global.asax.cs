@@ -18,7 +18,6 @@ namespace CoffeeMachineSkypeBot
 			ConfigureBuilder(builder);
 
 			var container = builder.Build();
-
 			GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
 			GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -36,7 +35,7 @@ namespace CoffeeMachineSkypeBot
 			builder.RegisterType<ConnectionProducer>().As<IConnection>()
 					.WithParameters(new[] { new ResolvedParameter((p, c) => p.Name == "protector", (p, c) => c.Resolve<IDataProtector>()),
 											new ResolvedParameter((p,c)=> p.Name=="decrypted",(p,c)=> WebConfigurationManager.AppSettings["decrypted"])
-											})
+										  })
 					.InstancePerRequest();
 
 			builder.RegisterType<CoffeeMachineContext>().As<CoffeeMachineContext>()

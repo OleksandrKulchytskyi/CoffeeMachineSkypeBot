@@ -40,12 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddUserRequest.cs" />
-    <Compile Include="AggregationType.cs" />
-    <Compile Include="ICommandHandler.cs" />
-    <Compile Include="IConnection.cs" />
-    <Compile Include="IDataRetrieval.cs" />
-    <Compile Include="IDataProtector.cs" />
+    <Compile Include="Models\AddUserRequest.cs" />
+    <Compile Include="Models\AggregationType.cs" />
+    <Compile Include="Interfaces\ICommandHandler.cs" />
+    <Compile Include="Interfaces\IConnection.cs" />
+    <Compile Include="Interfaces\IDataRetrieval.cs" />
+    <Compile Include="Interfaces\IDataProtector.cs" />
+    <Compile Include="Models\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

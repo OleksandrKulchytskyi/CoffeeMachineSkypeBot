@@ -1,4 +1,4 @@
-﻿namespace CoffeeMachine.Abstraction
+﻿namespace CoffeeMachine.Abstraction.Models
 {
 	public sealed class AddUserRequest
 	{

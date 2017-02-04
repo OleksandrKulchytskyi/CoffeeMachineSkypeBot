@@ -1,7 +1,7 @@
 ﻿
 namespace CoffeeMachine.Abstraction
 {
-    public interface ICommandHandler
+	public interface ICommandHandler
 	{
 		bool CanHandle(string command);
 
