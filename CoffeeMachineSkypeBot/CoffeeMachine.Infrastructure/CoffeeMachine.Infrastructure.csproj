@@ -60,6 +60,10 @@
     <Compile Include="Migrations\201702041520525_InitialContext.Designer.cs">
       <DependentUpon>201702041520525_InitialContext.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702052015401_User_UserIdentifier.cs" />
+    <Compile Include="Migrations\201702052015401_User_UserIdentifier.Designer.cs">
+      <DependentUpon>201702052015401_User_UserIdentifier.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringDataProtector.cs" />
@@ -81,6 +85,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702041520525_InitialContext.resx">
       <DependentUpon>201702041520525_InitialContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702052015401_User_UserIdentifier.resx">
+      <DependentUpon>201702052015401_User_UserIdentifier.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

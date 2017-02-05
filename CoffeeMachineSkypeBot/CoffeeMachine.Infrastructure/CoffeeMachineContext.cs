@@ -46,8 +46,13 @@ namespace CoffeeMachine.Infrastructure
 
 			this.HasKey<int>(s => s.Id);
 
-			this.Property(p => p.UserName)
-					.HasMaxLength(100);
+			this.Property(p => p.UserIdentifier)
+					.HasMaxLength(100).IsRequired();
+
+			this.Property(p => p.UserDescription)
+				.HasMaxLength(100).IsOptional();
+
+			this.Property(p => p.CreatedOn).IsOptional();
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace CoffeeMachine.Models
 	{
 		[Required]
 		[StringLength(100)]
-		public string UserName { get; set; }
+		public string UserIdentifier { get; set; }
 
 		[StringLength(100)]
 		public string UserDescription { get; set; }

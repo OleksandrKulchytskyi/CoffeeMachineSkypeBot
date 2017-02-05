@@ -18,7 +18,7 @@ namespace CoffeeMachine.Infrastructure
 
 		public void AddActivity(string uid)
 		{
-			var user = context.Users.FirstOrDefault(x => x.UserName == uid);
+			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == uid);
 			if (user != null)
 			{
 				user.Activities.Add(new Models.UserActitvity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
@@ -58,7 +58,7 @@ namespace CoffeeMachine.Infrastructure
 
 		public int? Aggregate(string uid, AggregationType type)
 		{
-			var user = context.Users.FirstOrDefault(x => x.UserName == uid);
+			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == uid);
 			if (user == null || !user.Active)
 			{
 				return 0;
@@ -87,7 +87,7 @@ namespace CoffeeMachine.Infrastructure
 
 		public UserStatus CheckUserStatus(string uid)
 		{
-			var approvedUser = context.Users.FirstOrDefault(x => x.UserName == uid);
+			var approvedUser = context.Users.FirstOrDefault(x => x.UserIdentifier == uid);
 			if (approvedUser != null)
 			{
 				return approvedUser.Active ? UserStatus.Active : UserStatus.Inactive;
@@ -120,7 +120,7 @@ namespace CoffeeMachine.Infrastructure
 					context.Users.Add(new Models.User
 					{
 						Active = true,
-						UserName = user.UserId,
+						UserIdentifier = user.UserId,
 						UserDescription = user.UserName,
 						CreatedOn = createdOn
 					});
