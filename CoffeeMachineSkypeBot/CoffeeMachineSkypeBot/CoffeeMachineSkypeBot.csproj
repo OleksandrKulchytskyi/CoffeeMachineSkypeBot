@@ -125,18 +125,24 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.component.html" />
     <Content Include="app\home\home.component.html" />
     <Content Include="app\login\login.component.html" />
-    <Content Include="default.htm" />
+    <Content Include="index.html" />
     <Content Include="Global.asax" />
+    <Content Include="Styles\app.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CommandController.cs" />
-    <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\api\AuthorizationController.cs" />
+    <Compile Include="Controllers\api\CommandController.cs" />
+    <Compile Include="Controllers\api\MessagesController.cs" />
+    <Compile Include="Controllers\api\PendingUsersController.cs" />
+    <Compile Include="DTOs\AuthorizationResponse.cs" />
+    <Compile Include="DTOs\LoginInfo.cs" />
     <Compile Include="DTOs\PendingUsersResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,6 +152,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="package.json" />
+    <Content Include="app\_alerts\alert.component.html" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot.pubxml" />
     <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
@@ -184,9 +191,14 @@
     <TypeScriptCompile Include="app\login\index.ts" />
     <TypeScriptCompile Include="app\login\login.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\_alerts\alert.component.ts" />
+    <TypeScriptCompile Include="app\_alerts\index.ts" />
     <TypeScriptCompile Include="app\_auth\auth.guard.ts" />
     <TypeScriptCompile Include="app\_auth\index.ts" />
+    <TypeScriptCompile Include="app\_fakes\fake_backend.ts" />
+    <TypeScriptCompile Include="app\_fakes\index.ts" />
     <TypeScriptCompile Include="app\_models\index.ts" />
+    <TypeScriptCompile Include="app\_models\PendingUser.ts" />
     <TypeScriptCompile Include="app\_models\user.ts" />
     <TypeScriptCompile Include="app\_services\alert.service.ts" />
     <TypeScriptCompile Include="app\_services\auth.service.ts" />
