@@ -17,7 +17,10 @@ var AuthService = (function () {
         this.http = http;
     }
     AuthService.prototype.login = function (username, password) {
-        return this.http.post('/api/Authorization/Login', JSON.stringify({ username: username, password: password }))
+        var body = JSON.stringify({ UserName: username, Password: password });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('/api/auth', body, options)
             .map(function (response) {
             // login successful if there's a jwt token in the response
             var user = response.json();

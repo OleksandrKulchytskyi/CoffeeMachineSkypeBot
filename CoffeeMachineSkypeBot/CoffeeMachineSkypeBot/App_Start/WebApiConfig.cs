@@ -11,6 +11,8 @@ namespace CoffeeMachineSkypeBot
 	{
 		public static void Register(HttpConfiguration config)
 		{
+			// Web API configuration and services
+
 			// Json settings
 			config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -18,11 +20,9 @@ namespace CoffeeMachineSkypeBot
 			JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
 			{
 				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				Formatting = Newtonsoft.Json.Formatting.Indented,
+				Formatting = Formatting.Indented,
 				NullValueHandling = NullValueHandling.Ignore,
 			};
-
-			// Web API configuration and services
 
 			// Web API routes
 			config.MapHttpAttributeRoutes();
@@ -44,8 +44,6 @@ namespace CoffeeMachineSkypeBot
 				routeTemplate: "api/{controller}/{id}",
 				defaults: new { id = RouteParameter.Optional }
 			);
-
-			
 		}
 	}
 }

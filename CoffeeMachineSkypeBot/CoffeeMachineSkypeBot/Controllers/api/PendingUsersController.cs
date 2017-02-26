@@ -4,7 +4,7 @@ using System.Web.Http;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
-	[Route("api/pending")]
+	[RoutePrefix("api/pending")]
 	public class PendingUsersController : ApiController
 	{
 		private readonly IDataService dataService;

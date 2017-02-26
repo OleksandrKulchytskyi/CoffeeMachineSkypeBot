@@ -10,10 +10,13 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 		{
 		}
 
+		[Route("api/auth")]
 		[HttpPost]
 		public IHttpActionResult Login(LoginInfo info)
 		{
-			if (info == null || String.IsNullOrEmpty(info.UserName) || String.IsNullOrEmpty(info.Password))
+			if (info == null || 
+				String.IsNullOrEmpty(info.UserName) ||
+				String.IsNullOrEmpty(info.Password))
 			{
 				return this.BadRequest();
 			}
@@ -25,10 +28,11 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 					Id = 1,
 					UserName = "Admin",
 					FirstName = "Administrator",
-					LastName = String.Empty
+					LastName = String.Empty,
+					Token = "fake-jwt-token"
 				};
 
-				return Ok(authResponse);
+				return Ok<AuthorizationResponse>(authResponse);
 			}
 
 			return Unauthorized();
