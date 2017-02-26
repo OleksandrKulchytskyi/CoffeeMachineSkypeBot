@@ -18,14 +18,21 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loadAllUsers();
+		this.loadPendingUsers();
 	}
 
-	deleteUser(id: number) {
-		this.userService.delete(id).subscribe(() => { this.loadAllUsers() });
+	approveUser(id: number) {
+		this.userService.approveUser(id).subscribe(() => { this.loadPendingUsers() });
 	}
 
-	private loadAllUsers() {
+	approveAll(toApprove: PendingUser[]) {
+
+		let ids = toApprove.map(function (el) { return el.id });
+
+		this.userService.approveByIds(ids).subscribe(() => { this.loadPendingUsers() });
+	}
+
+	private loadPendingUsers() {
 		this.userService.getPendingUsers().subscribe(users => { this.pending = users; });
 	}
 }

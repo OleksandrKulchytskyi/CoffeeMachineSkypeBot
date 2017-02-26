@@ -106,6 +106,31 @@ namespace CoffeeMachine.Infrastructure
 			return usersToApprove;
 		}
 
+		public void ApproveUsers(IEnumerable<int> ids)
+		{
+			var forApproval = context.ApprovalQueue.Where(x => ids.Contains(x.Id))
+												.ToList();
+
+			if (forApproval.Any())
+			{
+				DateTime createdOn = DateTime.UtcNow;
+				foreach (var user in forApproval)
+				{
+					context.Users.Add(new Models.User
+					{
+						Active = true,
+						UserIdentifier = user.UserId,
+						UserDescription = user.UserName,
+						CreatedOn = createdOn
+					});
+				}
+
+				forApproval.ForEach(i => context.ApprovalQueue.Remove(i));
+
+				context.SaveChanges();
+			}
+		}
+
 		public void InitializeApprovedUsers()
 		{
 			var approved = context.ApprovalQueue.Where(x => x.Approved)

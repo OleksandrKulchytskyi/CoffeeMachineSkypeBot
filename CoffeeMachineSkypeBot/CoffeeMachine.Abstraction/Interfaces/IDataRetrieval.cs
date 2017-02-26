@@ -17,5 +17,7 @@ namespace CoffeeMachine.Abstraction
 		void InitializeApprovedUsers();
 
 		IEnumerable<ApprovalQueue> GetUsersForApprove();
+
+		void ApproveUsers(IEnumerable<int> ids);
 	}
 }

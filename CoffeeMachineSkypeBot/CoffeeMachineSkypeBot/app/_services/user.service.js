@@ -18,6 +18,12 @@ var UserService = (function () {
     UserService.prototype.getPendingUsers = function () {
         return this.http.get('api/pending/getall', this.includeJWT()).map(function (resp) { return resp.json(); });
     };
+    UserService.prototype.approveUser = function (id) {
+        return this.http.put('/api/pending/single/' + id, this.includeJWT()).map(function (resp) { return resp.json(); });
+    };
+    UserService.prototype.approveByIds = function (ids) {
+        return this.http.post('/api/pending/byids', ids, this.includeJWT()).map(function (resp) { return resp.json(); });
+    };
     UserService.prototype.getAll = function () {
         return this.http.get('/api/users', this.includeJWT()).map(function (response) { return response.json(); });
     };

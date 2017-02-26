@@ -4,9 +4,12 @@
     <h3>Users pending approval:</h3>
     <ul>
         <li *ngFor="let user of pending">
-            {{user.username}} ({{user.firstName}} {{user.lastName}})
-            - <a (click)="deleteUser(user.id)">Delete</a>
+            {{user.userName}} ({{user.identifier}})
+            - <a (click)="approveUser(user.id)">Approve</a>
         </li>
     </ul>
+    <div>
+        <a class="help-block" (click)="approveAll(pending)">Approve all</a>
+    </div>
     <p><a [routerLink]="['/login']">Logout</a></p>
 </div>

@@ -11,6 +11,14 @@ export class UserService {
 		return this.http.get('api/pending/getall', this.includeJWT()).map((resp: Response) => resp.json());
 	}
 
+	approveUser(id: number) {
+		return this.http.put('/api/pending/single/' + id, this.includeJWT()).map((resp: Response) => resp.json());
+	}
+
+	approveByIds(ids: number[]) {
+		return this.http.post('/api/pending/byids', ids, this.includeJWT()).map((resp: Response) => resp.json());
+	}
+
 	getAll() {
 		return this.http.get('/api/users', this.includeJWT()).map((response: Response) => response.json());
 	}

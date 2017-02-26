@@ -18,13 +18,18 @@ var HomeComponent = (function () {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.loadAllUsers();
+        this.loadPendingUsers();
     };
-    HomeComponent.prototype.deleteUser = function (id) {
+    HomeComponent.prototype.approveUser = function (id) {
         var _this = this;
-        this.userService.delete(id).subscribe(function () { _this.loadAllUsers(); });
+        this.userService.approveUser(id).subscribe(function () { _this.loadPendingUsers(); });
     };
-    HomeComponent.prototype.loadAllUsers = function () {
+    HomeComponent.prototype.approveAll = function (toApprove) {
+        var _this = this;
+        var ids = toApprove.map(function (el) { return el.id; });
+        this.userService.approveByIds(ids).subscribe(function () { _this.loadPendingUsers(); });
+    };
+    HomeComponent.prototype.loadPendingUsers = function () {
         var _this = this;
         this.userService.getPendingUsers().subscribe(function (users) { _this.pending = users; });
     };
