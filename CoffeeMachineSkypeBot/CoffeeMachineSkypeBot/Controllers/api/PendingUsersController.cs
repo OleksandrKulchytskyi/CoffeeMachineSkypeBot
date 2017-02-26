@@ -14,6 +14,7 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 			this.dataService = dataService;
 		}
 
+		[Route("getall")]
 		[HttpGet]
 		public IHttpActionResult GetAll()
 		{

@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { User } from '../_models/index';
+import { User, PendingUser } from '../_models/index';
 import { UserService } from '../_services/index';
 
 @Component({
@@ -11,7 +11,7 @@ import { UserService } from '../_services/index';
 export class HomeComponent implements OnInit {
 
 	currentUser: User;
-	users: User[] = [];
+	pending: PendingUser [] = [];
 
 	constructor(private userService: UserService) {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -26,6 +26,6 @@ export class HomeComponent implements OnInit {
 	}
 
 	private loadAllUsers() {
-		this.userService.getAll().subscribe(users => { this.users = users; });
+		this.userService.getPendingUsers().subscribe(users => { this.pending = users; });
 	}
 }

@@ -16,26 +16,26 @@ var UserService = (function () {
         this.http = http;
     }
     UserService.prototype.getPendingUsers = function () {
-        return this.http.get('api/pending/getall', this.jwt()).map(function (resp) { return resp.json(); });
+        return this.http.get('api/pending/getall', this.includeJWT()).map(function (resp) { return resp.json(); });
     };
     UserService.prototype.getAll = function () {
-        return this.http.get('/api/users', this.jwt()).map(function (response) { return response.json(); });
+        return this.http.get('/api/users', this.includeJWT()).map(function (response) { return response.json(); });
     };
     UserService.prototype.getById = function (id) {
-        return this.http.get('/api/users/' + id, this.jwt()).map(function (response) { return response.json(); });
+        return this.http.get('/api/users/' + id, this.includeJWT()).map(function (response) { return response.json(); });
     };
     UserService.prototype.create = function (user) {
-        return this.http.post('/api/users', user, this.jwt()).map(function (response) { return response.json(); });
+        return this.http.post('/api/users', user, this.includeJWT()).map(function (response) { return response.json(); });
     };
     UserService.prototype.update = function (user) {
-        return this.http.put('/api/users/' + user.id, user, this.jwt()).map(function (response) { return response.json(); });
+        return this.http.put('/api/users/' + user.id, user, this.includeJWT()).map(function (response) { return response.json(); });
     };
     UserService.prototype.delete = function (id) {
-        return this.http.delete('/api/users/' + id, this.jwt()).map(function (response) { return response.json(); });
+        return this.http.delete('/api/users/' + id, this.includeJWT()).map(function (response) { return response.json(); });
     };
     // private helper methods
-    UserService.prototype.jwt = function () {
-        // create authorization header with jwt token
+    UserService.prototype.includeJWT = function () {
+        // create authorization header with includeJWT token
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
             var headers = new http_1.Headers({ 'Authorization': 'Bearer ' + currentUser.token });
