@@ -21,6 +21,7 @@ var index_2 = require("./_auth/index");
 var index_3 = require("./_services/index");
 var index_4 = require("./home/index");
 var index_5 = require("./login/index");
+var index_6 = require("./statistic/index");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -38,17 +39,19 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             index_1.AlertComponent,
             index_4.HomeComponent,
-            index_5.LoginComponent
+            index_5.LoginComponent,
+            index_6.StatisticComponent
         ],
         providers: [
             index_2.AuthGuard,
             index_3.AlertService,
             index_3.AuthService,
             index_3.UserService,
+            index_3.StatisticService,
+            http_2.BaseRequestOptions
             // providers used to create fake backend
             //fakeBackendProvider,
             //MockBackend,
-            http_2.BaseRequestOptions
         ],
         bootstrap: [app_component_1.AppComponent]
     })

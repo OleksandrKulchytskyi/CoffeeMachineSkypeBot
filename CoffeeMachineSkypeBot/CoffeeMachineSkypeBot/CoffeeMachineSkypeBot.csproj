@@ -128,6 +128,7 @@
     <Content Include="app\app.component.html" />
     <Content Include="app\home\home.component.html" />
     <Content Include="app\login\login.component.html" />
+    <Content Include="app\statistic\statistic.component.html" />
     <Content Include="index.html" />
     <Content Include="Global.asax" />
     <Content Include="Styles\app.css" />
@@ -141,6 +142,7 @@
     <Compile Include="Controllers\api\CommandController.cs" />
     <Compile Include="Controllers\api\MessagesController.cs" />
     <Compile Include="Controllers\api\PendingUsersController.cs" />
+    <Compile Include="Controllers\api\StatisticsApiController.cs" />
     <Compile Include="DTOs\AuthorizationResponse.cs" />
     <Compile Include="DTOs\LoginInfo.cs" />
     <Compile Include="DTOs\PendingUsersResponse.cs" />
@@ -191,6 +193,8 @@
     <TypeScriptCompile Include="app\login\index.ts" />
     <TypeScriptCompile Include="app\login\login.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\statistic\index.ts" />
+    <TypeScriptCompile Include="app\statistic\statistic.component.ts" />
     <TypeScriptCompile Include="app\_alerts\alert.component.ts" />
     <TypeScriptCompile Include="app\_alerts\index.ts" />
     <TypeScriptCompile Include="app\_auth\auth.guard.ts" />
@@ -203,6 +207,7 @@
     <TypeScriptCompile Include="app\_services\alert.service.ts" />
     <TypeScriptCompile Include="app\_services\auth.service.ts" />
     <TypeScriptCompile Include="app\_services\index.ts" />
+    <TypeScriptCompile Include="app\_services\statistic.service.ts" />
     <TypeScriptCompile Include="app\_services\user.service.ts" />
   </ItemGroup>
   <ItemGroup />
