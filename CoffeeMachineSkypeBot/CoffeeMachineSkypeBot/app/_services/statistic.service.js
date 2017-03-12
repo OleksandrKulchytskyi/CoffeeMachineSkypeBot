@@ -20,6 +20,7 @@ var StatisticService = (function () {
     }
     StatisticService.prototype.fileChange = function (event) {
         var fileList = event.target.files;
+        console.log(fileList);
         if (fileList.length > 0) {
             var file = fileList[0];
             var formData = new FormData();

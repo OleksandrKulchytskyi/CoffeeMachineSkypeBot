@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { AlertService, AuthService } from '../_services/index';
 
 @Component({
@@ -39,5 +38,9 @@ export class LoginComponent implements OnInit {
 				this.alertService.error(error);
 				this.loading = false;
 			});
+	}
+
+	logout() {
+		this.authenticationService.logout();
 	}
 }

@@ -15,8 +15,9 @@ var StatisticComponent = (function () {
     function StatisticComponent(statisticService) {
         this.statisticService = statisticService;
     }
-    StatisticComponent.prototype.uploadFile = function (event) {
+    StatisticComponent.prototype.onChange = function (event) {
         this.loaded = false;
+        console.log(event);
         this.statisticService.fileChange(event);
         this.loaded = true;
     };

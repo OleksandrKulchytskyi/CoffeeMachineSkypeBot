@@ -1,8 +1,10 @@
 ﻿<div class="col-md-6 col-md-offset-3">
-    <h2>Hi {{currentUser.firstName}}!</h2>
+    <h3>Hi {{currentUser.firstName}}!</h3>
     <p>You're logged in to Coffee Machine Portal</p>
-    <a class="help-block" (click)="navigateToStatistics">Statistics</a>
-    <h3>Users pending approval:</h3>
+    <p>
+        <a [routerLink]="['/statistics']">Statistics</a>
+    </p>
+    <h3>User(s), pending approval action:</h3>
     <ul>
         <li *ngFor="let user of pending">
             {{user.userName}} ({{user.identifier}})

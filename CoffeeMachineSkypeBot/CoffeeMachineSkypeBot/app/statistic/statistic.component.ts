@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, ElementRef } from '@angular/core';
+﻿import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatisticService } from '../_services/index';
 
@@ -7,20 +7,23 @@ import { StatisticService } from '../_services/index';
 	templateUrl: 'statistic.component.html'
 })
 
-
 export class StatisticComponent
 {
 	loaded: boolean;
 	@ViewChild('fileInput') myFileInput: ElementRef;
 
-	constructor( private statisticService: StatisticService)
+	constructor(private statisticService: StatisticService)
+				//,private emitter: EventEmitter<any>)
 	{
 	}
 
-	uploadFile(event: any) {
+	onChange(event: any) {
+
 		this.loaded = false;
 
+		console.log(event);
 		this.statisticService.fileChange(event);
+
 		this.loaded = true;
 	}
 }

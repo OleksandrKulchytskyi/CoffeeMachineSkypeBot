@@ -15,8 +15,29 @@ require("rxjs/add/operator/map");
 var AuthService = (function () {
     function AuthService(http) {
         this.http = http;
+        this.storageItem = "currentUser";
     }
+    AuthService.prototype.isAuthenticated = function () {
+        if (!localStorage.getItem(this.storageItem) ||
+            localStorage.getItem(this.storageItem) == "") {
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+    AuthService.prototype.getUserName = function () {
+        if (!localStorage.getItem(this.storageItem) ||
+            localStorage.getItem(this.storageItem) == "") {
+            return "Unknown";
+        }
+        else {
+            var usr = JSON.parse(localStorage.getItem(this.storageItem));
+            return usr.username;
+        }
+    };
     AuthService.prototype.login = function (username, password) {
+        var _this = this;
         var body = JSON.stringify({ UserName: username, Password: password });
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
@@ -26,13 +47,13 @@ var AuthService = (function () {
             var user = response.json();
             if (user && user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem(_this.storageItem, JSON.stringify(user));
             }
         });
     };
     AuthService.prototype.logout = function () {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem(this.storageItem);
     };
     return AuthService;
 }());

@@ -18,11 +18,10 @@ var HomeComponent = (function () {
         this.router = router;
         this.userService = userService;
         this.pending = [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.loadPendingUsers();
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/statistics';
     };
     HomeComponent.prototype.approveUser = function (id) {
         var _this = this;
@@ -32,9 +31,6 @@ var HomeComponent = (function () {
         var _this = this;
         var ids = toApprove.map(function (el) { return el.id; });
         this.userService.approveByIds(ids).subscribe(function () { _this.loadPendingUsers(); });
-    };
-    HomeComponent.prototype.navigateToStatistics = function () {
-        this.router.navigate([this.returnUrl]);
     };
     HomeComponent.prototype.loadPendingUsers = function () {
         var _this = this;

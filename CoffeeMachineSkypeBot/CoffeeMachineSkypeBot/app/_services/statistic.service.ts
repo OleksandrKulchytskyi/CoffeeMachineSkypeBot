@@ -13,6 +13,8 @@ export class StatisticService {
 
 		let fileList: FileList = event.target.files;
 
+		console.log(fileList);
+
 		if (fileList.length > 0) {
 
 			let file: File = fileList[0];

@@ -10,19 +10,18 @@ import { UserService } from '../_services/index';
 
 export class HomeComponent implements OnInit {
 
-	returnUrl: string;
 	currentUser: User;
 	pending: PendingUser [] = [];
 
 	constructor(private route: ActivatedRoute,
 				private router: Router,
-				private userService: UserService) {
-		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+				private userService: UserService)
+	{
 	}
 
 	ngOnInit() {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.loadPendingUsers();
-		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/statistics';
 	}
 
 	approveUser(id: number) {
@@ -34,10 +33,6 @@ export class HomeComponent implements OnInit {
 		let ids = toApprove.map(function (el) { return el.id });
 
 		this.userService.approveByIds(ids).subscribe(() => { this.loadPendingUsers() });
-	}
-
-	navigateToStatistics() {
-		this.router.navigate([this.returnUrl]);
 	}
 
 	private loadPendingUsers() {

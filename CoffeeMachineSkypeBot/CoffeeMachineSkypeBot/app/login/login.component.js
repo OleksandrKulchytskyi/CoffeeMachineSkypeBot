@@ -38,6 +38,9 @@ var LoginComponent = (function () {
             _this.loading = false;
         });
     };
+    LoginComponent.prototype.logout = function () {
+        this.authenticationService.logout();
+    };
     return LoginComponent;
 }());
 LoginComponent = __decorate([
