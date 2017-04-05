@@ -1,4 +1,5 @@
 ﻿using CoffeeMachine.Abstraction;
+using CoffeeMachine.Abstraction.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -20,7 +21,7 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 		public IHttpActionResult GetAll()
 		{
 			var users = dataService.GetUsersForApprove()
-									.Select(x => new DTOs.PendingUsersResponse { Id = x.Id, Identifier = x.UserId, UserName = x.UserName })
+									.Select(x => new PendingUsersResponse { Id = x.Id, Identifier = x.UserId, UserName = x.UserName })
 									.ToArray();
 			return base.Ok(users);
 		}

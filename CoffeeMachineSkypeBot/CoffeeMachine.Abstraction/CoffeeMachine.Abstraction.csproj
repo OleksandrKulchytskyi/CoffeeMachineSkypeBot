@@ -46,6 +46,7 @@
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="Interfaces\IDataRetrieval.cs" />
     <Compile Include="Interfaces\IDataProtector.cs" />
+    <Compile Include="Models\PendingUsersResponse.cs" />
     <Compile Include="Models\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

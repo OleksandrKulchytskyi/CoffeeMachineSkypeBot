@@ -81,4 +81,3 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 		public string SkypeId { get; set; }
 	}
 }
-}
