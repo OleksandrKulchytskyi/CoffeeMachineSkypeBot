@@ -22,9 +22,8 @@ namespace CoffeeMachine.Infrastructure
 			if (user != null)
 			{
 				user.Activities.Add(new Models.UserActitvity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
+				context.SaveChanges();
 			}
-
-			context.SaveChanges();
 		}
 
 		public void AddUserForApprovalQueue(IEnumerable<AddUserRequest> members)

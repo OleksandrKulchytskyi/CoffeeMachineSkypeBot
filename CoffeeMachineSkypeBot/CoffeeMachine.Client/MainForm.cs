@@ -93,7 +93,8 @@ namespace CoffeeMachine.Client
 
 		private async Task<bool> AsyncSendFile(string filePath)
 		{
-			const string api = "api/StatisticsApi/upload";
+			//const string api = "api/StatisticsApi/upload";
+			const string api = "api/StatisticsApi/uploadsinglefile";
 			var url = String.Concat(ConfigurationManager.AppSettings["serverHost"], api);
 
 			HttpContent fileContent = null;
@@ -109,6 +110,8 @@ namespace CoffeeMachine.Client
 			{
 				using (var formData = new MultipartFormDataContent())
 				{
+					fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+
 					formData.Add(fileContent, "file", "fileName");
 
 					//call service

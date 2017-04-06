@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
@@ -44,6 +47,47 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 			return Ok();
 		}
 
+		public async Task<FileResult> UploadSingleFile()
+		{
+			var streamProvider = new MultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
+			var dataStreamProvider = await Request.Content.ReadAsMultipartAsync(streamProvider);
+
+			var contents = dataStreamProvider.Contents;
+
+			var bytes = await contents[0].ReadAsByteArrayAsync();
+
+			var result = new List<DataContainer>(50);
+
+			using (var ms = new MemoryStream(bytes))
+			using (StreamReader sr = new StreamReader(ms))
+			{
+				string line = null;
+				while ((line = sr.ReadLine()) != null)
+				{
+					DataContainer parsed = ParseLine(line);
+					if (parsed != null)
+					{
+						result.Add(parsed);
+					}
+				}
+			}
+
+			result.ForEach(x => dataService.AddActivity(x.SkypeId));
+
+			var fResult = new FileResult
+			{
+				FileNames = streamProvider.FileData.Select(entry => entry.LocalFileName),
+				Names = streamProvider.FileData.Select(entry => entry.Headers.ContentDisposition.FileName),
+				ContentTypes = streamProvider.FileData.Select(entry => entry.Headers.ContentType.MediaType),
+				Description = streamProvider.FormData["description"],
+				CreatedTimestamp = DateTime.UtcNow,
+				UpdatedTimestamp = DateTime.UtcNow,
+				DownloadLink = "TODO, will implement when file is persisited"
+			};
+
+			return fResult;
+		}
+
 		private DataContainer ParseLine(string line)
 		{
 			if (String.IsNullOrEmpty(line))
@@ -72,6 +116,17 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 
 			return null;
 		}
+	}
+
+	public class FileResult
+	{
+		public IEnumerable<string> FileNames { get; set; }
+		public string Description { get; set; }
+		public DateTime CreatedTimestamp { get; set; }
+		public DateTime UpdatedTimestamp { get; set; }
+		public string DownloadLink { get; set; }
+		public IEnumerable<string> ContentTypes { get; set; }
+		public IEnumerable<string> Names { get; set; }
 	}
 
 	public class DataContainer
