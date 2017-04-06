@@ -32,10 +32,11 @@
 			this.tabUserApproval = new System.Windows.Forms.TabPage();
 			this.listUsersToApprove = new System.Windows.Forms.ListView();
 			this.tabStatistics = new System.Windows.Forms.TabPage();
+			this.btnUpload = new System.Windows.Forms.Button();
 			this.btnSelect = new System.Windows.Forms.Button();
 			this.txtFilePath = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.btnUpload = new System.Windows.Forms.Button();
+			this.btnApproveSelected = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabUserApproval.SuspendLayout();
 			this.tabStatistics.SuspendLayout();
@@ -53,6 +54,7 @@
 			// 
 			// tabUserApproval
 			// 
+			this.tabUserApproval.Controls.Add(this.btnApproveSelected);
 			this.tabUserApproval.Controls.Add(this.listUsersToApprove);
 			this.tabUserApproval.Location = new System.Drawing.Point(4, 22);
 			this.tabUserApproval.Name = "tabUserApproval";
@@ -84,6 +86,16 @@
 			this.tabStatistics.Text = "Statisctics";
 			this.tabStatistics.UseVisualStyleBackColor = true;
 			// 
+			// btnUpload
+			// 
+			this.btnUpload.Location = new System.Drawing.Point(22, 60);
+			this.btnUpload.Name = "btnUpload";
+			this.btnUpload.Size = new System.Drawing.Size(75, 23);
+			this.btnUpload.TabIndex = 3;
+			this.btnUpload.Text = "Upload";
+			this.btnUpload.UseVisualStyleBackColor = true;
+			this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+			// 
 			// btnSelect
 			// 
 			this.btnSelect.Location = new System.Drawing.Point(305, 32);
@@ -106,19 +118,19 @@
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(19, 17);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(103, 13);
+			this.label1.Size = new System.Drawing.Size(117, 15);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Select file to upload:";
 			// 
-			// btnUpload
+			// btnApproveSelected
 			// 
-			this.btnUpload.Location = new System.Drawing.Point(22, 60);
-			this.btnUpload.Name = "btnUpload";
-			this.btnUpload.Size = new System.Drawing.Size(75, 23);
-			this.btnUpload.TabIndex = 3;
-			this.btnUpload.Text = "Upload";
-			this.btnUpload.UseVisualStyleBackColor = true;
-			this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+			this.btnApproveSelected.Location = new System.Drawing.Point(458, 7);
+			this.btnApproveSelected.Name = "btnApproveSelected";
+			this.btnApproveSelected.Size = new System.Drawing.Size(90, 33);
+			this.btnApproveSelected.TabIndex = 1;
+			this.btnApproveSelected.Text = "Approve";
+			this.btnApproveSelected.UseVisualStyleBackColor = true;
+			this.btnApproveSelected.Click += new System.EventHandler(this.btnApproveSelected_Click);
 			// 
 			// MainForm
 			// 
@@ -148,6 +160,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button btnSelect;
 		private System.Windows.Forms.Button btnUpload;
+		private System.Windows.Forms.Button btnApproveSelected;
 	}
 }
 

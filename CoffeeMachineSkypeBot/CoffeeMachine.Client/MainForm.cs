@@ -43,9 +43,9 @@ namespace CoffeeMachine.Client
 
 		private async void Form1_Load(object sender, EventArgs e)
 		{
-			var tab = this.tabControl1.SelectedTab;
+			var selectedTab = this.tabControl1.SelectedTab;
 
-			var listView = (tab.Controls.Find("listUsersToApprove", true).FirstOrDefault() as ListView);
+			var listView = (selectedTab.Controls.Find("listUsersToApprove", true).FirstOrDefault() as ListView);
 			if (listView != null)
 			{
 				List<Abstraction.Models.PendingUsersResponse> users = null;
@@ -63,32 +63,63 @@ namespace CoffeeMachine.Client
 					foreach (var item in users)
 					{
 						var viewItem = new ListViewItem();
-						viewItem.Text = item.Identifier;
-						viewItem.ToolTipText = item.UserName;
-
+						viewItem.Text = item.UserName;
+						viewItem.ToolTipText = item.Identifier;
+						viewItem.Tag = item;
 						listView.Items.Add(viewItem);
 					}
 				}
 			}
 		}
 
-		private async Task<List<Abstraction.Models.PendingUsersResponse>> GetUsersForApproval()
+		private void btnSelect_Click(object sender, EventArgs e)
 		{
-			using (var client = new HttpClient())
+			using (OpenFileDialog ofd = new OpenFileDialog())
 			{
-				client.DefaultRequestHeaders.Add("Accept", "application/json");
+				ofd.Title = "Choose file for upload";
+				ofd.Filter = "Text Files(*.txt) | *.txt | All Files(*.*) | *.*";
 
-				const string api = "api/pending/getall";
-				var response = await client.GetAsync(String.Concat(ConfigurationManager.AppSettings["serverHost"], api));
-
-				if (response.IsSuccessStatusCode)
+				var disalogResult = ofd.ShowDialog();
+				if (disalogResult == DialogResult.OK)
 				{
-					var users = await response.Content.ReadAsAsync<List<Abstraction.Models.PendingUsersResponse>>();
-					return users;
+					txtFilePath.Text = ofd.FileName;
+				}
+			}
+		}
+
+		private async void btnUpload_Click(object sender, EventArgs e)
+		{
+			var result = await this.AsyncSendFile(txtFilePath.Text);
+			if (result)
+			{
+				MessageBox.Show("File was uploaded.");
+			}
+		}
+
+		private async void btnApproveSelected_Click(object sender, EventArgs e)
+		{
+			var selected = listUsersToApprove.SelectedItems;
+			var ids = new List<int>(selected.Count);
+			foreach (var item in selected)
+			{
+				var lvi = (item as ListViewItem);
+				if (lvi != null && (lvi.Tag as Abstraction.Models.PendingUsersResponse) != null)
+				{
+					ids.Add((lvi.Tag as Abstraction.Models.PendingUsersResponse).Id);
 				}
 			}
 
-			return new List<Abstraction.Models.PendingUsersResponse>(0);
+			if (ids.Any())
+			{
+				try
+				{
+					var result = await ApproveUsersAsync(ids);
+				}
+				catch(Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+				}
+			}
 		}
 
 		private async Task<bool> AsyncSendFile(string filePath)
@@ -126,28 +157,43 @@ namespace CoffeeMachine.Client
 			}
 		}
 
-		private void btnSelect_Click(object sender, EventArgs e)
+		private async Task<List<Abstraction.Models.PendingUsersResponse>> GetUsersForApproval()
 		{
-			using (OpenFileDialog ofd = new OpenFileDialog())
+			using (var client = new HttpClient())
 			{
-				ofd.Title = "Choose file for upload";
-				ofd.Filter = "Text Files(*.txt) | *.txt | All Files(*.*) | *.*";
+				client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-				var disalogResult = ofd.ShowDialog();
-				if (disalogResult == DialogResult.OK)
+				const string api = "api/pending/getall";
+				var response = await client.GetAsync(String.Concat(ConfigurationManager.AppSettings["serverHost"], api));
+
+				if (response.IsSuccessStatusCode)
 				{
-					txtFilePath.Text = ofd.FileName;
+					var users = await response.Content.ReadAsAsync<List<Abstraction.Models.PendingUsersResponse>>();
+					return users;
 				}
 			}
 
+			return new List<Abstraction.Models.PendingUsersResponse>(0);
 		}
 
-		private async void btnUpload_Click(object sender, EventArgs e)
+		private async Task<bool> ApproveUsersAsync(List<int> ids)
 		{
-			var result = await this.AsyncSendFile(txtFilePath.Text);
-			if (result)
+			const string route = "api/pending/byids";
+			var url = String.Concat(ConfigurationManager.AppSettings["serverHost"], route);
+
+			using (var client = new HttpClient())
 			{
-				MessageBox.Show("File was uploaded.");
+				client.DefaultRequestHeaders.Accept.Clear();
+				client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+				var response = await client.PostAsJsonAsync<List<int>>(url, ids);
+
+				if (!response.IsSuccessStatusCode)
+				{
+					return false;
+				}
+
+				return true;
 			}
 		}
 	}

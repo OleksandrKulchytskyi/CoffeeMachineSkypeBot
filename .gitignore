@@ -116,3 +116,4 @@ WebSignalR/Log/AppLo*.txt
 Server/WebSignalR/WebSignalR/Log/*.txt
 Server/WebSignalR/WebSignalR/Log/*.log
 /CoffeeMachineSkypeBot/CoffeeMachineSkypeBot/node_modules
+/CoffeeMachineSkypeBot/CoffeeMachineSkypeBot/node_modules.7z
