@@ -89,36 +89,50 @@ namespace CoffeeMachine.Client
 
 		private async void btnUpload_Click(object sender, EventArgs e)
 		{
-			var result = await this.AsyncSendFile(txtFilePath.Text);
-			if (result)
+			if (!String.IsNullOrEmpty(txtFilePath.Text))
 			{
-				MessageBox.Show("File was uploaded.");
+				var result = await this.AsyncSendFile(txtFilePath.Text);
+				if (result)
+				{
+					MessageBox.Show(this, "File was uploaded.");
+				}
+			}
+			else
+			{
+				MessageBox.Show(this, "You need to select file for upload.");
 			}
 		}
 
 		private async void btnApproveSelected_Click(object sender, EventArgs e)
 		{
 			var selected = listUsersToApprove.SelectedItems;
-			var ids = new List<int>(selected.Count);
-			foreach (var item in selected)
+			if (selected.Count > 0)
 			{
-				var lvi = (item as ListViewItem);
-				if (lvi != null && (lvi.Tag as Abstraction.Models.PendingUsersResponse) != null)
+				var ids = new List<int>(selected.Count);
+				foreach (var item in selected)
 				{
-					ids.Add((lvi.Tag as Abstraction.Models.PendingUsersResponse).Id);
+					var lvi = (item as ListViewItem);
+					if (lvi != null && (lvi.Tag as Abstraction.Models.PendingUsersResponse) != null)
+					{
+						ids.Add((lvi.Tag as Abstraction.Models.PendingUsersResponse).Id);
+					}
+				}
+
+				if (ids.Any())
+				{
+					try
+					{
+						var result = await ApproveUsersAsync(ids);
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(this, ex.Message);
+					}
 				}
 			}
-
-			if (ids.Any())
+			else
 			{
-				try
-				{
-					var result = await ApproveUsersAsync(ids);
-				}
-				catch(Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
+				MessageBox.Show(this, "Please, select user(s) for approval.");
 			}
 		}
 
