@@ -194,7 +194,7 @@ namespace CoffeeMachine.Infrastructure
 				}
 
 				var user = dbUsers[import.UserIdentifier];
-				user.Activities.Add(new Models.UserActitvity { UserId = user.Id, Date = import.Date, Cups = 1 });
+				context.UserActivity.Add(new Models.UserActitvity { UserId = user.Id, Date = import.Date, Cups = 1 });
 			}
 
 			int procressed = await context.SaveChangesAsync();
