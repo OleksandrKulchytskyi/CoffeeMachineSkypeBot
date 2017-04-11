@@ -55,7 +55,7 @@
     <Compile Include="CoffeeMachineContext.cs" />
     <Compile Include="CommandHandler.cs" />
     <Compile Include="ConnectionProducer.cs" />
-    <Compile Include="DataRetrieval.cs" />
+    <Compile Include="SQLDataService.cs" />
     <Compile Include="Migrations\201702041520525_InitialContext.cs" />
     <Compile Include="Migrations\201702041520525_InitialContext.Designer.cs">
       <DependentUpon>201702041520525_InitialContext.cs</DependentUpon>

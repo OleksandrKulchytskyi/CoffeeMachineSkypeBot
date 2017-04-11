@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using CoffeeMachine.Abstraction;
 using CoffeeMachine.Abstraction.Models;
 using CoffeeMachine.Models;
+using CoffeeMachine.Abstraction.Dto;
+using System.Threading.Tasks;
 
 namespace CoffeeMachine.Infrastructure
 {
-	public sealed class DataRetrieval : IDataService
+	public sealed class SQLDataService : IDataService
 	{
 		private readonly CoffeeMachineContext context;
 
-		public DataRetrieval(CoffeeMachineContext context)
+		public SQLDataService(CoffeeMachineContext context)
 		{
 			this.context = context;
 		}
 
-		public void AddActivity(string uid)
+		public void AddActivity(string userIdentifier)
 		{
-			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == uid);
+			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == userIdentifier);
 			if (user != null)
 			{
 				user.Activities.Add(new Models.UserActitvity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
@@ -151,6 +154,52 @@ namespace CoffeeMachine.Infrastructure
 					context.SaveChanges();
 				}
 			}
+		}
+
+		public async Task<List<ImportValidationResult>> ImportUserActivity(List<ImportDataContainer> importedData)
+		{
+			if (importedData == null || !importedData.Any())
+			{
+				return new List<ImportValidationResult>(1);
+			}
+
+			var validationResult = new List<ImportValidationResult>(importedData.Count);
+
+			var userIdentifiers = importedData.Where(x => !String.IsNullOrEmpty( x.UserIdentifier))
+											 .Select(x => x.UserIdentifier).Distinct()
+											 .ToList();
+
+			var dbUsers = context.Users.Where(x => userIdentifiers.Contains(x.UserIdentifier))
+								.AsNoTracking().ToDictionary(x=>x.UserIdentifier);
+
+			foreach (var import in importedData)
+			{
+				if (String.IsNullOrEmpty(import.UserIdentifier))
+				{
+					validationResult.Add(new ImportValidationResult { RowId = import.RowId, Message = "User identifier cannot be empty." });
+					continue;
+				}
+
+				if(!dbUsers.ContainsKey(import.UserIdentifier))
+				{
+					validationResult.Add(new ImportValidationResult { RowId = import.RowId, Message = "User identifier doesn't exists in the context." });
+					continue;
+				}
+
+				if (dbUsers.ContainsKey(import.UserIdentifier) && 
+					!dbUsers[import.UserIdentifier].Active)
+				{
+					validationResult.Add(new ImportValidationResult { RowId = import.RowId, Message = "User is disable in the system." });
+					continue;
+				}
+
+				var user = dbUsers[import.UserIdentifier];
+				user.Activities.Add(new Models.UserActitvity { UserId = user.Id, Date = import.Date, Cups = 1 });
+			}
+
+			int procressed = await context.SaveChangesAsync();
+
+			return validationResult;
 		}
 	}
 }

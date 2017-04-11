@@ -91,7 +91,16 @@ namespace CoffeeMachine.Client
 		{
 			if (!String.IsNullOrEmpty(txtFilePath.Text))
 			{
-				var result = await this.AsyncSendFile(txtFilePath.Text);
+				bool result;
+				try
+				{
+					result = await this.AsyncSendFile(txtFilePath.Text);
+				}
+				catch(Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+					return;
+				}
 				if (result)
 				{
 					MessageBox.Show(this, "File was uploaded.");

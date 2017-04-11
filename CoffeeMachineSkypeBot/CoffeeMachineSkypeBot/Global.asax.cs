@@ -27,7 +27,7 @@ namespace CoffeeMachineSkypeBot
 		{
 			builder.RegisterType<CommandHandler>().As<ICommandHandler>()
 					.InstancePerRequest();
-			builder.RegisterType<DataRetrieval>().As<IDataService>()
+			builder.RegisterType<SQLDataService>().As<IDataService>()
 					.InstancePerRequest();
 			builder.RegisterType<StringDataProtector>().As<IDataProtector>()
 					.InstancePerLifetimeScope();

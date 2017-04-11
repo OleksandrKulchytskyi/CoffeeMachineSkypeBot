@@ -1,6 +1,8 @@
-﻿using CoffeeMachine.Abstraction.Models;
+﻿using CoffeeMachine.Abstraction.Dto;
+using CoffeeMachine.Abstraction.Models;
 using CoffeeMachine.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoffeeMachine.Abstraction
 {
@@ -19,5 +21,7 @@ namespace CoffeeMachine.Abstraction
 		IEnumerable<ApprovalQueue> GetUsersForApprove();
 
 		void ApproveUsers(IEnumerable<int> ids);
+
+		Task<List<ImportValidationResult>> ImportUserActivity(List<ImportDataContainer> importedData);
 	}
 }
