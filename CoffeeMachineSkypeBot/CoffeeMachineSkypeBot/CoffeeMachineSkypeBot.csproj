@@ -156,6 +156,10 @@
     <Content Include="packages.config" />
     <Content Include="package.json" />
     <Content Include="app\_alerts\alert.component.html" />
+    <None Include="Properties\PublishProfiles\CoffeeMachineBot - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\CoffeeMachineBot - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\CoffeeMachineBot - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\CoffeeMachineBot - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot.pubxml" />
     <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
@@ -211,7 +215,9 @@
     <TypeScriptCompile Include="app\_services\statistic.service.ts" />
     <TypeScriptCompile Include="app\_services\user.service.ts" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
