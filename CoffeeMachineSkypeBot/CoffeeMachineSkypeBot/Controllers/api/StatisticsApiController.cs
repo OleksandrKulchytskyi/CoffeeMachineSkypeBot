@@ -69,7 +69,7 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 				return new ImportDataContainer
 				{
 					Date = DateTime.ParseExact(splitted[0], DateFormat, provider),
-					UserIdentifier = splitted[1]
+					UserIdentifier = splitted[1].Trim()
 				};
 			}
 			else if (splitted.Length == 3)
@@ -77,8 +77,8 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 				return new ImportDataContainer
 				{
 					Date = DateTime.ParseExact(splitted[0], DateFormat, provider),
-					SkypeId = splitted[1],
-					UserIdentifier = splitted[2]
+					SkypeId = splitted[1].Trim(),
+					UserIdentifier = splitted[2].Trim()
 				};
 			}
 
