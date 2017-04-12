@@ -1,6 +1,6 @@
 ﻿using System;
-using CoffeeMachine.Abstraction;
 using System.Collections.Generic;
+using CoffeeMachine.Abstraction;
 
 namespace CoffeeMachine.Infrastructure
 {
@@ -60,7 +60,8 @@ namespace CoffeeMachine.Infrastructure
 			var count = dataService.Aggregate(uid, type);
 			if (count.HasValue)
 			{
-				return $"User - {uid} has made - {count} cup(s)";
+				//return $"User - {uid} has made - {count} cup(s)";
+				return $"You made - {count} cup(s).";
 			}
 			return NoCountMessage;
 		}

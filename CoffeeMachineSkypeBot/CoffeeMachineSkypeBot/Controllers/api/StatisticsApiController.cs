@@ -1,14 +1,13 @@
-﻿using CoffeeMachine.Abstraction;
-using CoffeeMachine.Abstraction.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
+using CoffeeMachine.Abstraction;
+using CoffeeMachine.Abstraction.Dto;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
@@ -52,7 +51,6 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 
 			var validationResult = await dataService.ImportUserActivity(importResult);
 
-
 			return validationResult;
 		}
 
@@ -69,7 +67,7 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 				return new ImportDataContainer
 				{
 					Date = DateTime.ParseExact(splitted[0], DateFormat, provider),
-					UserIdentifier = splitted[1].Trim()
+					UserIdentifier = splitted[1].Trim().Replace("\"", String.Empty)
 				};
 			}
 			else if (splitted.Length == 3)
@@ -77,8 +75,8 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 				return new ImportDataContainer
 				{
 					Date = DateTime.ParseExact(splitted[0], DateFormat, provider),
-					SkypeId = splitted[1].Trim(),
-					UserIdentifier = splitted[2].Trim()
+					SkypeId = splitted[1].Trim().Replace("\"", String.Empty),
+					UserIdentifier = splitted[2].Trim().Replace("\"", String.Empty)
 				};
 			}
 

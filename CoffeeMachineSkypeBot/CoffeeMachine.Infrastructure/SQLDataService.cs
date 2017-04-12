@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using CoffeeMachine.Abstraction;
 using CoffeeMachine.Abstraction.Models;
 using CoffeeMachine.Models;
 using CoffeeMachine.Abstraction.Dto;
-using System.Threading.Tasks;
 
 namespace CoffeeMachine.Infrastructure
 {
@@ -24,7 +24,7 @@ namespace CoffeeMachine.Infrastructure
 			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == userIdentifier);
 			if (user != null)
 			{
-				user.Activities.Add(new Models.UserActitvity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
+				user.Activities.Add(new UserActitvity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
 				context.SaveChanges();
 			}
 		}
@@ -67,24 +67,47 @@ namespace CoffeeMachine.Infrastructure
 			}
 
 			DateTime now = DateTime.UtcNow;
+			DateTime till;
+			DateTime from;
 
-			return context.UserActivity.Where(x => x.UserId == user.Id).Count();
-			//switch (type)
-			//{
-			//	case AggregationType.None:
-			//		return 0;
-			//		break;
-			//	case AggregationType.Day:
-			//		var till = now.AddHours(-24).Date;
-			//		return dbContext.UserActivity.Where(x => x.UserId == user.Id && x.Date > till).DefaultIfEmpty(0).Count();
-			//                 break;
-			//	case AggregationType.Month:
-			//		break;
-			//	case AggregationType.Year:
-			//		break;
-			//	default:
-			//		break;
-			//}
+			switch (type)
+			{
+				case AggregationType.None:
+					{
+						return context.UserActivity.Where(x => x.UserId == user.Id).Count();
+					}
+				case AggregationType.Day:
+					{
+						till = now;
+						from = now.AddHours(-24).Date;
+						return context.UserActivity.AsNoTracking()
+										.Where(x => x.UserId == user.Id && x.Date > from && x.Date < till)
+										.Select(x => x.Date)
+										.DefaultIfEmpty().Count();
+					}
+				case AggregationType.Month:
+					{
+						from = now.AddDays(-31);
+						till = now;
+						return context.UserActivity.AsNoTracking()
+										.Where(x => x.UserId == user.Id && x.Date > from && x.Date < till)
+										.Select(x => x.Date)
+										.DefaultIfEmpty().Count();
+					}
+				case AggregationType.Year:
+					{
+						from = now.AddDays(-365);
+						till = now;
+						return context.UserActivity.AsNoTracking()
+										.Where(x => x.UserId == user.Id && x.Date > from && x.Date < till)
+										.Select(x => x.Date)
+										.DefaultIfEmpty().Count();
+					}
+				default:
+					{
+						throw new NotImplementedException();
+					}
+			}
 		}
 
 		public UserStatus CheckUserStatus(string uid)
@@ -118,7 +141,7 @@ namespace CoffeeMachine.Infrastructure
 				DateTime createdOn = DateTime.UtcNow;
 				foreach (var user in forApproval)
 				{
-					context.Users.Add(new Models.User
+					context.Users.Add(new User
 					{
 						Active = true,
 						UserIdentifier = user.UserId,
@@ -135,16 +158,17 @@ namespace CoffeeMachine.Infrastructure
 
 		public void InitializeApprovedUsers()
 		{
-			var approved = context.ApprovalQueue.Where(x => x.Approved)
-													.Select(x => new { UserId = x.UserId, UserName = x.UserName })
-													.ToArray();
+			var approved = context.ApprovalQueue.AsNoTracking()
+												.Where(x => x.Approved)
+												.Select(x => new { UserId = x.UserId, UserName = x.UserName })
+												.ToList();
 
-			if (approved.Any())
+			if (approved.Count > 0)
 			{
 				DateTime createdOn = DateTime.UtcNow;
 				foreach (var user in approved)
 				{
-					context.Users.Add(new Models.User
+					context.Users.Add(new User
 					{
 						Active = true,
 						UserIdentifier = user.UserId,
@@ -165,12 +189,12 @@ namespace CoffeeMachine.Infrastructure
 
 			var validationResult = new List<ImportValidationResult>(importedData.Count);
 
-			var userIdentifiers = importedData.Where(x => !String.IsNullOrEmpty( x.UserIdentifier))
+			var userIdentifiers = importedData.Where(x => !String.IsNullOrEmpty(x.UserIdentifier))
 											 .Select(x => x.UserIdentifier).Distinct()
 											 .ToList();
 
 			var dbUsers = context.Users.Where(x => userIdentifiers.Contains(x.UserIdentifier))
-								.AsNoTracking().ToDictionary(x=>x.UserIdentifier);
+								.AsNoTracking().ToDictionary(x => x.UserIdentifier);
 
 			foreach (var import in importedData)
 			{
@@ -180,13 +204,13 @@ namespace CoffeeMachine.Infrastructure
 					continue;
 				}
 
-				if(!dbUsers.ContainsKey(import.UserIdentifier))
+				if (!dbUsers.ContainsKey(import.UserIdentifier))
 				{
 					validationResult.Add(new ImportValidationResult { RowId = import.RowId, Message = "User identifier doesn't exists in the context." });
 					continue;
 				}
 
-				if (dbUsers.ContainsKey(import.UserIdentifier) && 
+				if (dbUsers.ContainsKey(import.UserIdentifier) &&
 					!dbUsers[import.UserIdentifier].Active)
 				{
 					validationResult.Add(new ImportValidationResult { RowId = import.RowId, Message = "User is disable in the system." });
@@ -194,7 +218,7 @@ namespace CoffeeMachine.Infrastructure
 				}
 
 				var user = dbUsers[import.UserIdentifier];
-				context.UserActivity.Add(new Models.UserActitvity { UserId = user.Id, Date = import.Date, Cups = 1 });
+				context.UserActivity.Add(new UserActitvity { UserId = user.Id, Date = import.Date, Cups = 1 });
 			}
 
 			int procressed = await context.SaveChangesAsync();

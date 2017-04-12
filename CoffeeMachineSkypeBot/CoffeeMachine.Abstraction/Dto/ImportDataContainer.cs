@@ -30,5 +30,15 @@ namespace CoffeeMachine.Abstraction.Dto
 	public class ImportValidationResult : ExportImportBase
 	{
 		public string Message { get; set; }
+
+		public override int GetHashCode()
+		{
+			return RowId.GetHashCode();
+		}
+
+		public override string ToString()
+		{
+			return String.Format("{0} - {1}", RowId.ToString(), String.IsNullOrEmpty(Message) ? String.Empty : Message);
+		}
 	}
 }

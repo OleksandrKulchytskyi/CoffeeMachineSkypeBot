@@ -45,11 +45,11 @@ namespace CoffeeMachineSkypeBot
 					var msg = $"Sorry your user  [{activity.From.Name}] is disabled in the system.";
 					return await SendMessageToActivityAsync(activity, connector, msg);
 				}
-
-				if (commandHandler.CanHandle(activity.Text) &&
+				var loweredCommand = String.IsNullOrEmpty(activity.Text) ? String.Empty : activity.Text.ToLower();
+				if (commandHandler.CanHandle(loweredCommand) &&
 					status == UserStatus.Active)
 				{
-					var result = commandHandler.HandleCommand(activity.Text, uid);
+					var result = commandHandler.HandleCommand(loweredCommand, uid);
 					await SendMessageToActivityAsync(activity, connector, result);
 					return Request.CreateResponse(HttpStatusCode.OK);
 				}

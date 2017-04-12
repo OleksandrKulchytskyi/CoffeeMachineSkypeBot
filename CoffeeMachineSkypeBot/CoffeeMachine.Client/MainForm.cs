@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeeMachine.Abstraction.Dto;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -91,19 +92,33 @@ namespace CoffeeMachine.Client
 		{
 			if (!String.IsNullOrEmpty(txtFilePath.Text))
 			{
-				bool result;
+				List<ImportValidationResult> validationResult = null;
 				try
 				{
-					result = await this.AsyncSendFile(txtFilePath.Text);
+					validationResult = await this.AsyncSendFile(txtFilePath.Text);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					MessageBox.Show(ex.Message);
 					return;
 				}
-				if (result)
+				if (validationResult != null && validationResult.Any())
 				{
-					MessageBox.Show(this, "File was uploaded.");
+					if (MessageBox.Show(this, "File was uploaded with some error(s). \n\r Do you want to see?",
+										"Attention", MessageBoxButtons.YesNo) == DialogResult.Yes)
+					{
+						var vrf = new ValidationResultForm();
+						var container = (vrf as IDataContainer);
+						if (container != null)
+						{
+							container.SetData(validationResult);
+						}
+						vrf.ShowDialog(this);
+					}
+				}
+				else
+				{
+					MessageBox.Show(this, "File was uploaded with no errors.");
 				}
 			}
 			else
@@ -145,7 +160,7 @@ namespace CoffeeMachine.Client
 			}
 		}
 
-		private async Task<bool> AsyncSendFile(string filePath)
+		private async Task<List<ImportValidationResult>> AsyncSendFile(string filePath)
 		{
 			//const string api = "api/StatisticsApi/upload";
 			const string api = "api/StatisticsApi/uploadsinglefile";
@@ -172,11 +187,13 @@ namespace CoffeeMachine.Client
 					var response = await client.PostAsync(url, formData);
 					if (!response.IsSuccessStatusCode)
 					{
-						return false;
+						throw new ApplicationException(response.ReasonPhrase);
 					}
-				}
 
-				return true;
+					var validationResult = await response.Content.ReadAsAsync<List<ImportValidationResult>>();
+
+					return validationResult;
+				}
 			}
 		}
 
