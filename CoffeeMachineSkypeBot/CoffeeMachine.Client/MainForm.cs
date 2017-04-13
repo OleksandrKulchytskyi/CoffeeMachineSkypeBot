@@ -75,15 +75,19 @@ namespace CoffeeMachine.Client
 
 		private void btnSelect_Click(object sender, EventArgs e)
 		{
-			using (OpenFileDialog ofd = new OpenFileDialog())
+			using (OpenFileDialog fileDialog = new OpenFileDialog())
 			{
-				ofd.Title = "Choose file for upload";
-				ofd.Filter = "Text Files(*.txt) | *.txt | All Files(*.*) | *.*";
+				fileDialog.CheckFileExists = true;
+				fileDialog.CheckPathExists = true;
+				fileDialog.Filter = "Text Files(*.txt)|*.txt|All Files(*.*)|*.*";
+				fileDialog.DefaultExt = "txt";
+				fileDialog.ShowReadOnly = true;
+				fileDialog.Title = "Choose file for upload";
 
-				var disalogResult = ofd.ShowDialog();
+				var disalogResult = fileDialog.ShowDialog();
 				if (disalogResult == DialogResult.OK)
 				{
-					txtFilePath.Text = ofd.FileName;
+					txtFilePath.Text = fileDialog.FileName;
 				}
 			}
 		}
