@@ -67,6 +67,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringDataProtector.cs" />
+    <Compile Include="UserActivityImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoffeeMachine.Abstraction\CoffeeMachine.Abstraction.csproj">

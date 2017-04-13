@@ -2,6 +2,7 @@
 using Autofac.Core;
 using Autofac.Integration.WebApi;
 using CoffeeMachine.Abstraction;
+using CoffeeMachine.Abstraction.Interfaces;
 using CoffeeMachine.Infrastructure;
 using System.Reflection;
 using System.Web.Configuration;
@@ -31,6 +32,9 @@ namespace CoffeeMachineSkypeBot
 					.InstancePerRequest();
 			builder.RegisterType<StringDataProtector>().As<IDataProtector>()
 					.InstancePerLifetimeScope();
+
+			builder.RegisterType<UserActivityImporter>().As<IUserActivityImporter>()
+					.InstancePerRequest(); 
 
 			builder.RegisterType<ConnectionProducer>().As<IConnection>()
 					.WithParameters(new[] { new ResolvedParameter((p, c) => p.Name == "protector", (p, c) => c.Resolve<IDataProtector>()),

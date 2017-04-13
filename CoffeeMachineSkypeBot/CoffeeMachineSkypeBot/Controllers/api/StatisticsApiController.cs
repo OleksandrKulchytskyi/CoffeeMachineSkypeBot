@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
 using CoffeeMachine.Abstraction;
 using CoffeeMachine.Abstraction.Dto;
+using CoffeeMachine.Abstraction.Interfaces;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
@@ -15,12 +16,13 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 	public class StatisticsApiController : ApiController
 	{
 		private readonly IDataService dataService;
-		private readonly CultureInfo provider = CultureInfo.InvariantCulture;
-		private readonly string DateFormat = "yyyy/MM/dd HH:mm:ss";
+		private readonly IUserActivityImporter importer;
 
-		public StatisticsApiController(IDataService dataService)
+		public StatisticsApiController(IDataService dataService,
+										IUserActivityImporter activityImporter)
 		{
 			this.dataService = dataService;
+			this.importer = activityImporter;
 		}
 
 		public async Task<List<ImportValidationResult>> UploadSingleFile()
@@ -31,56 +33,17 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 			var contents = dataStreamProvider.Contents;
 			var bytes = await contents[0].ReadAsByteArrayAsync();
 
-			var importResult = new List<ImportDataContainer>(50);
-
-			using (var ms = new MemoryStream(bytes))
-			using (StreamReader sr = new StreamReader(ms))
-			{
-				string line = null;
-				int rowNumber = 0;
-				while ((line = sr.ReadLine()) != null)
-				{
-					var exportData = ParseLine(line);
-					if (exportData != null)
-					{
-						exportData.RowId = ++rowNumber;
-						importResult.Add(exportData);
-					}
-				}
-			}
+			var importResult = importer.ImportFrom(new MemoryStream(bytes));
 
 			var validationResult = await dataService.ImportUserActivity(importResult);
 
+			if (importer.Errors.Count > 0)
+			{
+				return validationResult.Union(importer.Errors)
+										.OrderBy(x => x.RowId).ToList();
+			}
+
 			return validationResult;
-		}
-
-		private ImportDataContainer ParseLine(string line)
-		{
-			if (String.IsNullOrEmpty(line))
-			{
-				return null;
-			}
-
-			var splitted = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			if (splitted.Length == 2)
-			{
-				return new ImportDataContainer
-				{
-					Date = DateTime.ParseExact(splitted[0], DateFormat, provider),
-					UserIdentifier = splitted[1].Trim().Replace("\"", String.Empty)
-				};
-			}
-			else if (splitted.Length == 3)
-			{
-				return new ImportDataContainer
-				{
-					Date = DateTime.ParseExact(splitted[0], DateFormat, provider),
-					SkypeId = splitted[1].Trim().Replace("\"", String.Empty),
-					UserIdentifier = splitted[2].Trim().Replace("\"", String.Empty)
-				};
-			}
-
-			return null;
 		}
 	}
 }
