@@ -222,7 +222,6 @@ namespace CoffeeMachine.Infrastructure
 			}
 
 			int procressed = await context.SaveChangesAsync();
-
 			return validationResult;
 		}
 	}
