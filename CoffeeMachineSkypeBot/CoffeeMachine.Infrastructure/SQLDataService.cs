@@ -63,45 +63,47 @@ namespace CoffeeMachine.Infrastructure
 			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == uid);
 			if (user == null || !user.Active)
 			{
-				return 0;
+				//Since user wasn't found returns null.
+				return null;
 			}
 
 			DateTime now = DateTime.UtcNow;
-			DateTime till;
 			DateTime from;
 
 			switch (type)
 			{
 				case AggregationType.None:
 					{
-						return context.UserActivity.Where(x => x.UserId == user.Id).Count();
+						return context.UserActivity.AsNoTracking()
+										.Where(x => x.UserId == user.Id)
+										.Select(x=>x.Id).Count();
 					}
 				case AggregationType.Day:
 					{
-						till = now;
-						from = now.AddHours(-24).Date;
+						from = now.AddHours(-24);
 						return context.UserActivity.AsNoTracking()
-										.Where(x => x.UserId == user.Id && x.Date > from && x.Date < till)
+										.Where(a => a.UserId == user.Id && (a.Date > from && a.Date < now))
 										.Select(x => x.Date)
-										.DefaultIfEmpty().Count();
+										.DefaultIfEmpty()
+										.Count();
 					}
 				case AggregationType.Month:
 					{
-						from = now.AddDays(-31);
-						till = now;
+						from = new DateTime(now.Year, now.Month, 1);
 						return context.UserActivity.AsNoTracking()
-										.Where(x => x.UserId == user.Id && x.Date > from && x.Date < till)
+										.Where(x => x.UserId == user.Id && (x.Date > from && x.Date < now))
 										.Select(x => x.Date)
-										.DefaultIfEmpty().Count();
+										.DefaultIfEmpty()
+										.Count();
 					}
 				case AggregationType.Year:
 					{
-						from = now.AddDays(-365);
-						till = now;
+						from = new DateTime(now.Year, 1, 1);
 						return context.UserActivity.AsNoTracking()
-										.Where(x => x.UserId == user.Id && x.Date > from && x.Date < till)
+										.Where(x => x.UserId == user.Id && (x.Date > from && x.Date < now))
 										.Select(x => x.Date)
-										.DefaultIfEmpty().Count();
+										.DefaultIfEmpty()
+										.Count();
 					}
 				default:
 					{

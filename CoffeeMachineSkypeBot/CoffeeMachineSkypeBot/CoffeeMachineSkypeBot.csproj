@@ -157,8 +157,10 @@
     <Content Include="package.json" />
     <Content Include="app\_alerts\alert.component.html" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\CoffeeMachineBot - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\CoffeeMachineBot - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CoffeeMachineBot.pubxml" />
     <Content Include="tsconfig.json" />

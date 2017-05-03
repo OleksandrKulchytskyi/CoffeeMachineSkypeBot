@@ -19,6 +19,7 @@ namespace CoffeeMachine.Infrastructure
 			comandHandlers.Add("day", HandleDayCommand);
 			comandHandlers.Add("month", HandleMonthCommand);
 			comandHandlers.Add("year", HandleYearCommand);
+			comandHandlers.Add("getservertime", GetServerTime);
 		}
 
 		public bool CanHandle(string command)
@@ -53,6 +54,11 @@ namespace CoffeeMachine.Infrastructure
 		private string HandleYearCommand(string uid)
 		{
 			return DoHandleCommon(uid, AggregationType.Year);
+		}
+
+		private string GetServerTime(string uid)
+		{
+			return DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
 		}
 
 		private string DoHandleCommon(string uid, AggregationType type)
