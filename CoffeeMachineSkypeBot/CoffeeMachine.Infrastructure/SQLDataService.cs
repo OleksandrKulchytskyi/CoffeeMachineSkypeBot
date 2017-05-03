@@ -75,15 +75,18 @@ namespace CoffeeMachine.Infrastructure
 				case AggregationType.None:
 					{
 						return context.UserActivity.AsNoTracking()
-										.Where(x => x.UserId == user.Id)
-										.Select(x=>x.Id).Count();
+										.Where(a => a.UserId == user.Id)
+										.Select(a => a.Cups)
+										.DefaultIfEmpty()
+										.Count();
 					}
 				case AggregationType.Day:
 					{
-						from = now.AddHours(-24);
+						//from = now.AddHours(-24);
 						return context.UserActivity.AsNoTracking()
-										.Where(a => a.UserId == user.Id && (a.Date > from && a.Date < now))
-										.Select(x => x.Date)
+										//.Where(a => a.UserId == user.Id && (a.Date >= from && a.Date <= now))
+										.Where(a => a.UserId == user.Id && (DbFunctions.TruncateTime(a.Date) == DbFunctions.TruncateTime(now)))
+										.Select(a => a.Cups)
 										.DefaultIfEmpty()
 										.Count();
 					}
@@ -91,8 +94,9 @@ namespace CoffeeMachine.Infrastructure
 					{
 						from = new DateTime(now.Year, now.Month, 1);
 						return context.UserActivity.AsNoTracking()
-										.Where(x => x.UserId == user.Id && (x.Date > from && x.Date < now))
-										.Select(x => x.Date)
+										.Where(x => x.UserId == user.Id &&
+													(DbFunctions.TruncateTime(x.Date) >= DbFunctions.TruncateTime(from) && DbFunctions.TruncateTime(x.Date) <= DbFunctions.TruncateTime(now)))
+										.Select(a => a.Cups)
 										.DefaultIfEmpty()
 										.Count();
 					}
@@ -100,8 +104,9 @@ namespace CoffeeMachine.Infrastructure
 					{
 						from = new DateTime(now.Year, 1, 1);
 						return context.UserActivity.AsNoTracking()
-										.Where(x => x.UserId == user.Id && (x.Date > from && x.Date < now))
-										.Select(x => x.Date)
+										.Where(x => x.UserId == user.Id &&
+													(DbFunctions.TruncateTime(x.Date) >= DbFunctions.TruncateTime(from) && DbFunctions.TruncateTime(x.Date) <= DbFunctions.TruncateTime(now)))
+										.Select(a => a.Cups)
 										.DefaultIfEmpty()
 										.Count();
 					}
