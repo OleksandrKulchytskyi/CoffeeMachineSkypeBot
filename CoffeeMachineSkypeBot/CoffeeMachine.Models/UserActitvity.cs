@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoffeeMachine.Models
 {
-	public class UserActitvity : EntitiyBase
+	[Table("UserActitvity")]
+	public class UserActivity : EntitiyBase
 	{
 		public DateTime Date { get; set; }
 

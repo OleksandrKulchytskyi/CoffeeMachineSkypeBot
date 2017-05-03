@@ -24,7 +24,7 @@ namespace CoffeeMachine.Infrastructure
 			var user = context.Users.FirstOrDefault(x => x.UserIdentifier == userIdentifier);
 			if (user != null)
 			{
-				user.Activities.Add(new UserActitvity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
+				user.Activities.Add(new UserActivity { UserId = user.Id, Date = DateTime.UtcNow, Cups = 1 });
 				context.SaveChanges();
 			}
 		}
@@ -225,7 +225,7 @@ namespace CoffeeMachine.Infrastructure
 				}
 
 				var user = dbUsers[import.UserIdentifier];
-				context.UserActivity.Add(new UserActitvity { UserId = user.Id, Date = import.Date, Cups = 1 });
+				context.UserActivity.Add(new UserActivity { UserId = user.Id, Date = import.Date, Cups = 1 });
 			}
 
 			int procressed = await context.SaveChangesAsync();

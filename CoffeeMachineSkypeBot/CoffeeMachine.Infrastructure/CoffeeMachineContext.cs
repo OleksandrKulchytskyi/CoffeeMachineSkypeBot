@@ -27,7 +27,7 @@ namespace CoffeeMachine.Infrastructure
 
 		public IDbSet<User> Users { get; set; }
 
-		public IDbSet<UserActitvity> UserActivity { get; set; }
+		public IDbSet<UserActivity> UserActivity { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

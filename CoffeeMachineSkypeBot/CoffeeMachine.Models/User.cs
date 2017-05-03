@@ -17,6 +17,6 @@ namespace CoffeeMachine.Models
 
 		public bool Active { get; set; }
 
-		public virtual IList<UserActitvity> Activities { get; set; }
+		public virtual IList<UserActivity> Activities { get; set; }
 	}
 }
