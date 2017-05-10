@@ -27,21 +27,21 @@ export class AuthService {
 			localStorage.getItem(this.storageItem) == "") {
 			return "Unknown";
 		} else {
-			let usr: User = JSON.parse(localStorage.getItem(this.storageItem));
+			const usr: User = JSON.parse(localStorage.getItem(this.storageItem));
 			return usr.username;
 		}
 	}
 
 	login(username: string, password: string) {
 
-		let body = JSON.stringify({ UserName: username, Password: password });
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers });
+		const body = JSON.stringify({ UserName: username, Password: password });
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		const options = new RequestOptions({ headers: headers });
 
 		return this.http.post('/api/auth', body, options)
 			.map((response: Response) => {
 				// login successful if there's a jwt token in the response
-				let user = response.json();
+				const user = response.json();
 				if (user && user.token) {
 					// store user details and jwt token in local storage to keep user logged in between page refreshes
 					localStorage.setItem(this.storageItem, JSON.stringify(user));
