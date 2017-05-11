@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
 	constructor(private secureService: AuthService,
 				private route: ActivatedRoute,
-				private router: Router,)
+				private router: Router)
 	{
 		this.authService = secureService;
 	}

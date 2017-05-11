@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { BaseRequestOptions } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { Config } from './config';
 import { routing } from './app.routing';
 
 import { AlertComponent } from './_alerts/index';
@@ -38,12 +39,23 @@ import { StatisticComponent } from './statistic/index';
 		AuthService,
 		UserService,
 		StatisticService,
-		BaseRequestOptions
-		// providers used to create fake backend
+		BaseRequestOptions,
+		Config
 		//fakeBackendProvider,
 		//MockBackend,
 	],
 	bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+ private _host : string;
+ private ConfData:Object;
+
+constructor(private config : Config) {
+
+		config.load().then((value) => {
+			console.log(value);
+			this.ConfData =  config.getConfigData();
+		});
+    }
+}
