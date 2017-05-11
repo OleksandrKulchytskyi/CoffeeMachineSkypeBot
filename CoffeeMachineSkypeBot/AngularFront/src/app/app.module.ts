@@ -55,9 +55,8 @@ export class AppModule {
   constructor(private config : Config) {
 
 		config.load().then((value) => {
-			this.ConfigData =  config.getConfigData();
-			this._host=this.config.getEnv("apiHostPath");
-			console.log(this._host);
+			this.ConfigData = config.getConfigData();
+			this._host = config.getEnv("apiHostPath");
 		});
     }
 }
