@@ -48,14 +48,16 @@ import { StatisticComponent } from './statistic/index';
 })
 
 export class AppModule {
- private _host : string;
- private ConfData:Object;
+  
+  private _host : string;
+  private ConfigData : Object;
 
-constructor(private config : Config) {
+  constructor(private config : Config) {
 
 		config.load().then((value) => {
-			console.log(value);
-			this.ConfData =  config.getConfigData();
+			this.ConfigData =  config.getConfigData();
+			this._host=this.config.getEnv("apiHostPath");
+			console.log(this._host);
 		});
     }
 }
