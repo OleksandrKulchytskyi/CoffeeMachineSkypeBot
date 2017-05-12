@@ -11,8 +11,7 @@ export class AuthService {
 	private  _configuration: Config;
 	storageItem = "currentUser";
 
-	constructor(private http: Http,
-				private config:Config) { 
+	constructor(private http: Http, private config: Config) { 
 		this._configuration = config;
 	}
 
@@ -21,7 +20,8 @@ export class AuthService {
 		if (!localStorage.getItem(this.storageItem) ||
 			localStorage.getItem(this.storageItem) == "") {
 			return false;
-		} else {
+		} 
+		else {
 			return true;
 		}
 	}
@@ -31,7 +31,8 @@ export class AuthService {
 		if (!localStorage.getItem(this.storageItem) ||
 			localStorage.getItem(this.storageItem) == "") {
 			return "Unknown";
-		} else {
+		} 
+		else {
 			const usr: User = JSON.parse(localStorage.getItem(this.storageItem));
 			return usr.username;
 		}
@@ -48,7 +49,6 @@ export class AuthService {
 
 		if(data){
 			apiPath = data.apiHostPath + apiPath;
-			console.log(apiPath);
 		}
 
 		return this.http.post(apiPath, body, options)
