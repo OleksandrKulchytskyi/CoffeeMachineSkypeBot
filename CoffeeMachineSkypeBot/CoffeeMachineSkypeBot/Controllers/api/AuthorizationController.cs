@@ -1,6 +1,6 @@
-﻿using CoffeeMachineSkypeBot.DTOs;
-using System;
+﻿using System;
 using System.Web.Http;
+using CoffeeMachineSkypeBot.DTOs;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
