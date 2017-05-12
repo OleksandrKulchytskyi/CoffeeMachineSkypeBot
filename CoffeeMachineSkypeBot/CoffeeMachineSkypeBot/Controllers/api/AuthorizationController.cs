@@ -12,6 +12,7 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 
 		[Route("api/auth")]
 		[HttpPost]
+		[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
 		public IHttpActionResult Login(LoginInfo info)
 		{
 			if (info == null || 

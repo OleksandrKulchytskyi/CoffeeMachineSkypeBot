@@ -9,7 +9,7 @@ import { Config } from '../config';
 export class AuthService {
 
 	private  _configuration: Config;
-	storageItem = "currentUser";
+	private storageItem = "currentUser";
 
 	constructor(private http: Http, private config: Config) { 
 		this._configuration = config;

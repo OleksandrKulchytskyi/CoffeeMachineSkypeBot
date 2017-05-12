@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace CoffeeMachineSkypeBot
 {
@@ -12,6 +9,7 @@ namespace CoffeeMachineSkypeBot
 		public static void Register(HttpConfiguration config)
 		{
 			// Web API configuration and services
+			config.EnableCors();
 
 			// Json settings
 			config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
