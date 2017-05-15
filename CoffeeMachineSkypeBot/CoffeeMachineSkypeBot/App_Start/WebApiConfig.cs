@@ -9,7 +9,8 @@ namespace CoffeeMachineSkypeBot
 		public static void Register(HttpConfiguration config)
 		{
 			// Web API configuration and services
-			config.EnableCors();
+			var cors = new System.Web.Http.Cors.EnableCorsAttribute("*", "*", "*");
+			config.EnableCors(cors);
 
 			// Json settings
 			config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;

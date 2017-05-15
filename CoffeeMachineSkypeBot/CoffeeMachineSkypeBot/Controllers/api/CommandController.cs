@@ -6,6 +6,7 @@ using System.Web.Http.Results;
 
 namespace CoffeeMachineSkypeBot.Controllers
 {
+	[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "get")]
 	public class CommandController : ApiController
 	{
 		private readonly ICommandHandler commandHandler;

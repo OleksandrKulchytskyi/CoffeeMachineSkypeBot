@@ -1,12 +1,13 @@
-﻿using CoffeeMachine.Abstraction;
-using CoffeeMachine.Abstraction.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using CoffeeMachine.Abstraction;
+using CoffeeMachine.Abstraction.Models;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
 	[RoutePrefix("api/pending")]
+	[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
 	public class PendingUsersController : ApiController
 	{
 		private readonly IDataService dataService;

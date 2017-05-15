@@ -14,7 +14,7 @@ export class UserService {
 	}
 
 	getPendingUsers() {
-		return this.http.get(this.apiPath + 'api/pending/getall', this.includeJWT()).map((resp: Response) => resp.json());
+		return this.http.get(this.apiPath + '/api/pending/getall', this.includeJWT()).map((resp: Response) => resp.json());
 	}
 
 	approveUser(id: number) {

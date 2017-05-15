@@ -13,6 +13,7 @@ using CoffeeMachine.Abstraction.Interfaces;
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
 	//[Authorize]
+	[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
 	public class StatisticsApiController : ApiController
 	{
 		private readonly IDataService dataService;
