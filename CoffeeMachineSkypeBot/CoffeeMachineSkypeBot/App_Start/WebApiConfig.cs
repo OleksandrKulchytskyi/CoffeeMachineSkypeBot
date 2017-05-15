@@ -8,10 +8,6 @@ namespace CoffeeMachineSkypeBot
 	{
 		public static void Register(HttpConfiguration config)
 		{
-			// Web API configuration and services
-			var cors = new System.Web.Http.Cors.EnableCorsAttribute("*", "*", "*");
-			config.EnableCors(cors);
-
 			// Json settings
 			config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -22,6 +18,10 @@ namespace CoffeeMachineSkypeBot
 				Formatting = Formatting.Indented,
 				NullValueHandling = NullValueHandling.Ignore,
 			};
+			
+			// Web API configuration and services
+			var cors = new System.Web.Http.Cors.EnableCorsAttribute("*", "*", "*");
+			config.EnableCors(cors);			
 
 			// Web API routes
 			config.MapHttpAttributeRoutes();
