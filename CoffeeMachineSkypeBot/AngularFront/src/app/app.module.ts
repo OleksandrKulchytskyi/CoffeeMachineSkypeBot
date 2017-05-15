@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+﻿import { NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -52,11 +52,12 @@ export class AppModule {
   private _host : string;
   private ConfigData : Object;
 
-  constructor(private config : Config) {
-
-		config.load().then((value) => {
-			this.ConfigData = config.getConfigData();
-			this._host = config.getEnv("apiHostPath");
-		});
-    }
+  constructor(private config : Config) { 
+		
+		config.load()
+		.then((value) => {
+					this.ConfigData = this.config.getConfigData();
+					this._host = this.config.getEnv("apiHostPath");
+			});
+  }
 }

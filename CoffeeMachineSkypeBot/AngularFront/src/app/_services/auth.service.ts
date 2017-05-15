@@ -9,7 +9,7 @@ import { Config } from '../config';
 export class AuthService {
 
 	private  _configuration: Config;
-	private storageItem = "currentUser";
+	private storageItem = 'currentUser';
 
 	constructor(private http: Http, private config: Config) { 
 		this._configuration = config;
@@ -18,7 +18,7 @@ export class AuthService {
 	isAuthenticated()
 	{
 		if (!localStorage.getItem(this.storageItem) ||
-			localStorage.getItem(this.storageItem) == "") {
+			localStorage.getItem(this.storageItem) == '') {
 			return false;
 		} 
 		else {
@@ -29,12 +29,12 @@ export class AuthService {
 	getUserName()
 	{
 		if (!localStorage.getItem(this.storageItem) ||
-			localStorage.getItem(this.storageItem) == "") {
+			localStorage.getItem(this.storageItem) == '') {
 			return "Unknown";
 		} 
 		else {
-			const usr: User = JSON.parse(localStorage.getItem(this.storageItem));
-			return usr.username;
+			const user: User = JSON.parse(localStorage.getItem(this.storageItem));
+			return user.username;
 		}
 	}
 

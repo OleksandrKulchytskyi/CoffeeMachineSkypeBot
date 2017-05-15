@@ -1,29 +1,40 @@
 ﻿import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { StatisticService } from '../_services/index';
+import { StatisticService, AlertService } from '../_services/index';
 
 @Component({
-	//moduleId: module.id,
 	templateUrl: 'statistic.component.html'
 })
 
 export class StatisticComponent
 {
-	loaded: boolean;
+	loading : boolean;
 	@ViewChild('fileInput') myFileInput: ElementRef;
 
-	constructor(private statisticService: StatisticService)
-				//,private emitter: EventEmitter<any>)
-	{
+	constructor(private statisticService: StatisticService,
+				private alertService: AlertService)	
+	{ 
+		this.loading = false;
 	}
 
-	onChange(event: any) {
+	onFileChange(event: any) {
+	
+		const fileList: FileList = event.target.files;
+		if(!fileList || fileList.length <= 0){
+			this.alertService.error('Please select a file for further upload.');
+		}
 
-		this.loaded = false;
+		this.loading = true;
+		const file: File = fileList[0];
 
-		console.log(event);
-		this.statisticService.fileChange(event);
-
-		this.loaded = true;
+		this.statisticService.submitStatistic(file)
+			.subscribe((logErrors) => { 
+									console.log(logErrors);
+									this.alertService.success(logErrors);
+									this.loading = false;
+									},
+						(error) => {
+									this.loading = false;
+						 			this.alertService.error(error); });
 	}
 }

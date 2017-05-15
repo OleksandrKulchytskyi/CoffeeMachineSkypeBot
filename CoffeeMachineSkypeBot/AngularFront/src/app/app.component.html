@@ -3,17 +3,18 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar">1</span>
+                <span class="icon-bar">2</span>
+                <span class="icon-bar">3</span>
             </button>
             <a class="navbar-brand" [routerLink]="['/']">Coffee Machine Web Portal</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="authService.isAuthenticated()"><a>{{authService.getUserName()}}</a></li>
+                <!--<li *ngIf="authService.isAuthenticated()"><a>{{authService.getUserName()}}</a></li>-->
                 <li *ngIf="authService.isAuthenticated()"><a href="#"  [routerLink]="['/home']">Users</a></li>
                 <li *ngIf="authService.isAuthenticated()"><a href="#"  [routerLink]="['/statistics']">Statistics</a></li>
+                <li *ngIf="authService.isAuthenticated()"><a href="#"> {{ loggedUserName }} </a></li>
                 <li *ngIf="authService.isAuthenticated()"><a href="#"  [routerLink]="['/login']" (click)="logout()">Logout</a></li>
                 <li *ngIf="!authService.isAuthenticated()"><a href="#" [routerLink]="['/login']">Login</a></li>
             </ul>

@@ -166,7 +166,6 @@ namespace CoffeeMachine.Client
 
 		private async Task<List<ImportValidationResult>> AsyncSendFile(string filePath)
 		{
-			//const string api = "api/StatisticsApi/upload";
 			const string api = "api/StatisticsApi/uploadsinglefile";
 			var url = String.Concat(ConfigurationManager.AppSettings["serverHost"], api);
 
