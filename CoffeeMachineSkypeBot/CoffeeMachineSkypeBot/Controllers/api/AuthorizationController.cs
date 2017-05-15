@@ -4,6 +4,7 @@ using CoffeeMachineSkypeBot.DTOs;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
+	[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
 	public class AuthorizationController : ApiController
 	{
 		public AuthorizationController()
@@ -12,7 +13,6 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 
 		[Route("api/auth")]
 		[HttpPost]
-		[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
 		public IHttpActionResult Login(LoginInfo info)
 		{
 			if (info == null || 

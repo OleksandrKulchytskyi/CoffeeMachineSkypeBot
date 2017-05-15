@@ -6,8 +6,8 @@ using CoffeeMachine.Abstraction.Models;
 
 namespace CoffeeMachineSkypeBot.Controllers.api
 {
-	[RoutePrefix("api/pending")]
 	[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
+	[RoutePrefix("api/pending")]
 	public class PendingUsersController : ApiController
 	{
 		private readonly IDataService dataService;
