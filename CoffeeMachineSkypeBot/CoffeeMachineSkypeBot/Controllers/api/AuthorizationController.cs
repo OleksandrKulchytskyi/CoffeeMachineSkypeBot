@@ -22,7 +22,8 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 				return this.BadRequest();
 			}
 
-			if (info.UserName == "admin" && info.Password == "coffee")
+			if (info.UserName.Equals("admin", StringComparison.OrdinalIgnoreCase) && 
+				info.Password.Equals("coffee",StringComparison.OrdinalIgnoreCase))
 			{
 				var authResponse = new AuthorizationResponse
 				{
