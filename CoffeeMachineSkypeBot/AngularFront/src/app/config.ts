@@ -9,7 +9,8 @@ export interface ApiConfig
 }
 
 @Injectable()
- export class Config {
+ export class Config 
+ {
 
  private _env: Object;
  private _path: string;
@@ -18,6 +19,7 @@ export interface ApiConfig
 
  constructor(private http: Http)
  {
+     //this._path = 'config/env.debug.json';
      this._path = 'config/env.json';
      this.isLoaded = false;
  }

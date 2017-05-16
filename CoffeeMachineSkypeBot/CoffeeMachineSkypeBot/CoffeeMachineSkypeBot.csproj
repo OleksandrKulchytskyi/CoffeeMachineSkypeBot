@@ -218,7 +218,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(SolutionDir)\AngularFront\dist\*.*"  "$(ProjectDir)"</PostBuildEvent>
+    <PostBuildEvent>copy /y "$(SolutionDir)\AngularFront\dist\*.*"  "$(ProjectDir)"
+mkdir "$(ProjectDir)\config"
+copy /y "$(SolutionDir)\AngularFront\dist\config\*.*"  "$(ProjectDir)\config"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

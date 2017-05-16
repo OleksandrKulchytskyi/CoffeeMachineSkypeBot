@@ -28,13 +28,21 @@ namespace CoffeeMachineSkypeBot.Controllers.api
 
 		public async Task<List<ImportValidationResult>> UploadSingleFile()
 		{
-			var streamProvider = new MultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
-			var dataStreamProvider = await Request.Content.ReadAsMultipartAsync(streamProvider);
+			byte[] bytesData;
+			if (Request.Content.IsMimeMultipartContent())
+			{
+				var streamProvider = new MultipartFormDataStreamProvider(HostingEnvironment.MapPath("~/App_Data"));
+				var dataStreamProvider = await Request.Content.ReadAsMultipartAsync(streamProvider);
 
-			var contents = dataStreamProvider.Contents;
-			var bytes = await contents[0].ReadAsByteArrayAsync();
+				var contents = dataStreamProvider.Contents;
+				bytesData = await contents[0].ReadAsByteArrayAsync();
+			}
+			else
+			{
+				bytesData = await Request.Content.ReadAsByteArrayAsync();
+			}
 
-			var importResult = importer.ImportFrom(new MemoryStream(bytes));
+			var importResult = importer.ImportFrom(new MemoryStream(bytesData));
 
 			var validationResult = await dataService.ImportUserActivity(importResult);
 
