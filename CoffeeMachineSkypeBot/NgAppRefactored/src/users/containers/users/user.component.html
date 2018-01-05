@@ -1,0 +1,13 @@
+<div class="col-md-6 col-md-offset-3">
+
+    <h3>User(s), pending approval action:</h3>
+    <ul>
+        <li *ngFor="let user of pending">
+            {{user.userName}} ({{user.identifier}})
+            - <a (click)="approveUser(user.id)">Approve</a>
+        </li>
+    </ul>
+    <div>
+        <a class="help-block" (click)="approveAll(pending)">Approve all</a>
+    </div>
+</div>

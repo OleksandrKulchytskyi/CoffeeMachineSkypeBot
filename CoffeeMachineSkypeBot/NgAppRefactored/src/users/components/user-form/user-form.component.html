@@ -1,0 +1,73 @@
+<div class="user-form">
+    <form [formGroup]="form">
+      <label>
+        <h4>User name (login)</h4>
+        <input 
+          type="text" 
+          formControlName="username"
+          placeholder="e.g. test user1"
+          class="user-form__input"
+          [class.error]="usernameControlInvalid">
+        <div
+          class="user-form__error"
+          *ngIf="usernameControlInvalid">
+          <p>Login must have a name</p>
+        </div>
+      </label>    
+      <!-- <ng-content></ng-content> -->
+      
+      <label>
+        <h4>User Details</h4>
+        <input 
+          type="text" 
+          formControlName="firstName"
+          placeholder="e.g. firstname user1"
+          class="user-form__input"
+          [class.error]="firstNameControlInvalid">
+        <div
+          class="user-form__error"
+          *ngIf="firstNameControlInvalid">
+          <p>First name must have a name</p>
+        </div>
+      </label>
+
+      <label>
+        <h4>Select User Details</h4>
+        <input 
+          type="text" 
+          formControlName="lastName"
+          placeholder="e.g. last name1"
+          class="user-form__input"
+          [class.error]="lastNameControlInvalid">
+        <div
+          class="user-form__error"
+          *ngIf="lastNameControlInvalid">
+          <p>Last name must have a name</p>
+        </div>
+      </label>
+      
+      <div class="user-form__actions">
+        <button
+          type="button"
+          class="btn btn__ok"
+          *ngIf="!exists"
+          (click)="createUser(form)">
+          Create user
+        </button>
+        <button
+          type="button"
+          class="btn btn__ok"
+          *ngIf="exists"
+          (click)="updateUser(form)">
+          Save changes
+        </button>
+        <button
+          type="button"
+          class="btn btn__warning"
+          *ngIf="exists"
+          (click)="removeUser(form)">
+          Delete user
+        </button>
+      </div>
+    </form>
+  </div>

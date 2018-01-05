@@ -1,0 +1,10 @@
+<div 
+      class="product-item">
+      <user-form
+        [user]="currentUser"
+        (selected)="onSelect($event)"
+        (create)="onCreate($event)"
+        (update)="onUpdate($event)"
+        (remove)="onRemove($event)">
+      </user-form>
+    </div>
