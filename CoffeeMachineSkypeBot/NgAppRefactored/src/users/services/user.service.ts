@@ -1,7 +1,5 @@
-import {
-  Injectable
-} from '@angular/core';
-import { Http,  Headers,  RequestOptions,  Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http,  Headers,  RequestOptions, Response} from '@angular/http';
 import {  User,  PendingUser } from '../models';
 import 'rxjs/add/operator/map';
 import {  Config } from '../../app/config';

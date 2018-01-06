@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User, PendingUser } from '../../models/';
 import { UserService } from '../../services/';
@@ -29,7 +30,7 @@ export class UserComponent implements OnInit {
 	approveAll(toApprove: PendingUser[]) {
 
 		const ids = toApprove.map(function (user) { return user.id });
-		// refresh UI
+		// Refresh UI
 		this.userService.approveByIds(ids).subscribe(
 							(data) => { this.loadPendingUsers(); },
 							(error) => { console.log(error); }); // this.alertService.error(error); });

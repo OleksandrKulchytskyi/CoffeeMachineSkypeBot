@@ -1,32 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
-export interface ApiConfig 
-{
+export interface ApiConfig {
     apiHostPath: string;
     forceLogin: boolean;
 }
 
 @Injectable()
- export class Config 
- {
- private _env: Object;
- private _path: string;
- private apiConfig: ApiConfig;
- private isLoaded: boolean;
+export class Config {
+private _env: Object;
+private _path: string;
+private apiConfig: ApiConfig;
+private isLoaded: boolean;
 
- constructor(private http: Http)
- {
-    //this._path = 'config/env.debug.json';
-     this._path = 'config/env.json';
-     this.isLoaded = false;
- }
+constructor(private http: Http) {
+// this._path = 'config/env.debug.json';
+this._path = 'config/env.json';
+this.isLoaded = false;
+}
  
- load() {
+load(): Promise<ApiConfig> {
     return new Promise((resolve, reject) => {
         this.http.get(this._path)
-                 .map(res => res.json())
+                 .map((res) => res.json())
                  .subscribe(
                      (data) => {
                         this.isLoaded = true;
@@ -34,24 +32,25 @@ export interface ApiConfig
                         this.apiConfig = data;
                         resolve(data);
                     },
-                    error => {
+                    (error) => {
                         this.isLoaded = false;
                         reject(error);
                     });
    });
 }
 
-getEnv(key: any) {
-     if (!this.isLoaded){
+getEnv(key: any): any {
+     if (!this.isLoaded) {
          this.load();
      }
    return this._env[key];
- }
+}
 
- getConfigData(){
-     if (!this.isLoaded){
+getConfigData(): ApiConfig {
+     if (!this.isLoaded) {
          this.load();
      }
      return this.apiConfig;
- }
-};
+}
+
+}
