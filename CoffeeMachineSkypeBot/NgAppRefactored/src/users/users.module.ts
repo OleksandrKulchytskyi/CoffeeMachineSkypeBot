@@ -14,14 +14,9 @@ import * as fromServices from './services';
 import { UserComponent } from './containers/users/user.component';
 
 export const ROUTES: Routes = [
-    {
-      path: '',
-      component: fromContainers.UserComponent,
-    },
-    {
-      path: ':id',
-      component: fromComponents.UserFormComponent,
-    }
+    { path: '', redirectTo: 'users', pathMatch: 'full'},
+    { path: 'users', component: fromContainers.UserComponent, },
+    { path: ':id', component: fromComponents.UserFormComponent, }
   ];
 
   @NgModule({
@@ -33,11 +28,9 @@ export const ROUTES: Routes = [
     ],
     providers: [...fromServices.services],
     declarations: [...fromContainers.containers, ...fromComponents.components],
-    exports: [...fromContainers.containers, ...fromComponents.components],
+    exports: [...fromContainers.containers, ...fromComponents.components, RouterModule],
   })
 
 export class UsersModule {
-  constructor(){
-    
-  }
+  constructor() {}
 }

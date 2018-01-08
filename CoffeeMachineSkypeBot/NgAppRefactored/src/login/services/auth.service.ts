@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from '../../users/models/user';
-import { Config } from '../config';
+import { Config } from '../../app/core/config';
 
 @Injectable()
 export class AuthService {

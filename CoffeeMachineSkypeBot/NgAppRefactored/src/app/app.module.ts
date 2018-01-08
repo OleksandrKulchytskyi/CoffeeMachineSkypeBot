@@ -3,22 +3,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule  } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { LoginModule } from '../login/login.module';
+
 
 const environment = {
   development: true,
   production: false,
 };
 
-import * as fromComponents from './components/';
-import * as fromContainers from './containers/';
 import * as fromSerices from './services';
-import { Config } from './config';
+import { Config } from './core/config';
+import { AppComponent } from './app.component';
 
 // routes
 export const ROUTES: Routes = [
-  { path: '', component: [fromContainers.AppComponent] },
-  { path: 'login', component: [fromContainers.LoginComponent] },
+  { path: '', redirectTo: 'users', pathMatch: 'full'},
+  { path: 'login', loadChildren: '../login/login.module#LoginModule' },
   { path: 'users', loadChildren: '../users/users.module#UsersModule', canActivate: [fromSerices.AuthGuard] },
   // otherwise redirect to home
 	{ path: '**', redirectTo: '' }
@@ -30,27 +33,27 @@ export const ROUTES: Routes = [
     BrowserAnimationsModule,
     HttpModule,
     FormsModule,
+    CoreModule,
+    SharedModule,
+    LoginModule,
     RouterModule.forRoot(ROUTES)
   ],
-  declarations: [
-    ...fromComponents.components,
-    ...fromContainers.containers
-  ],
+  declarations: [ AppComponent ],
   providers: [...fromSerices.services, Config],
-  bootstrap: [fromContainers.AppComponent],
-  entryComponents: [fromContainers.LoginComponent]
+  exports: [RouterModule],
+  bootstrap: [AppComponent],
 })
 
 export class AppModule {
-  private _host : string;
-  private ConfigData : Object;
 
-  constructor(private config: Config) {
-		
+private host: string;
+private configData: Object;
+
+constructor(private config: Config) {
 		config.load()
 		.then((value) => {
-					this.ConfigData = this.config.getConfigData();
-					this._host = this.config.getEnv('apiHostPath');
+					this.configData = this.config.getConfigData();
+					this.host = this.config.getEnv('apiHostPath');
 			}).catch((error) => console.error(error));
-    }
+}
 }

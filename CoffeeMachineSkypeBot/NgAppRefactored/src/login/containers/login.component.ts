@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, AuthService } from '../../services/';
+import { AuthService } from '../services/';
+import { AlertService } from '../../app/core/services/alert.service';
 
 @Component({
 	templateUrl: 'login.component.html'
@@ -27,7 +28,7 @@ ngOnInit() {
 login(): void {
 	this.loading = true;
 	this.authenticationService.login(this.model.username, this.model.password)
-		.subscribe((data) => this.router.navigate([this.returnUrl],
+		.subscribe((data) => { this.router.navigate([this.returnUrl]); },
 					(error) => {
 				this.alertService.error(error);
 				this.loading = false;
