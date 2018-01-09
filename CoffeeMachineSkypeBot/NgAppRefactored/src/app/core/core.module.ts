@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import * as fromServices from './services';
 import * as fromComponents from './components';
+// Containers
+import { PageNotFoundComponent } from './containers/page-not-found/page-not-found.component';
+
 import { Config } from './config';
 
 @NgModule({
   imports: [ CommonModule ],
-  declarations: [...fromComponents.components],
-  exports: [...fromComponents.components],
+  declarations: [...fromComponents.components, PageNotFoundComponent],
+  exports: [...fromComponents.components, PageNotFoundComponent],
   providers: [...fromServices.services, Config]
 })
 

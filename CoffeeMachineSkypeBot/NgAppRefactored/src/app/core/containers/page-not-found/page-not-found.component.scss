@@ -1,0 +1,51 @@
+@import 'variables';
+
+.pageNotFound {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $color-theme-violet;
+
+  .pageNotFound-content {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    margin-top: rem(-90px);
+  }
+
+  img {
+    width: 22%;
+  }
+
+  h1 {
+    color: $color-white;
+    font-weight: 100;
+    font-size: rem(45px);
+    letter-spacing: rem(1px);
+  }
+
+  h3 {
+    color: $color-white;
+    font-weight: 100;
+    font-size: rem(22px);
+    margin: 0;
+  }
+
+  button {
+    text-transform: uppercase;
+    background: none;
+    color: $color-white;
+    border: rem(1px) solid $color-white;
+    border-radius: rem(5px);
+    padding: rem(8px) rem(30px);
+    margin-top: rem(30px);
+    outline: none;
+
+    &:hover {
+      background-color: $color-theme-darkviolet;
+    }
+  }
+}
