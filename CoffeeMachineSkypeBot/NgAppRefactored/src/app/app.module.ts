@@ -22,9 +22,10 @@ import { PageNotFoundComponent } from './core/containers/page-not-found/page-not
 // routes
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'users', pathMatch: 'full'},
-  { path: 'page-not-found', component: PageNotFoundComponent },
   { path: 'login', loadChildren: '../login/login.module#LoginModule' },
   { path: 'users', loadChildren: '../users/users.module#UsersModule', canActivate: [fromSerices.AuthGuard] },
+  { path: 'page-not-found', component: PageNotFoundComponent },
+  
   // otherwise redirect to home
 	{ path: '**', component: PageNotFoundComponent }
 ];

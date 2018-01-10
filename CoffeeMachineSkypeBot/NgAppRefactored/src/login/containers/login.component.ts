@@ -27,8 +27,9 @@ ngOnInit() {
 
 login(): void {
 	this.loading = true;
+
 	this.authenticationService.login(this.model.username, this.model.password)
-		.subscribe((data) => { this.router.navigate([this.returnUrl]); },
+		.subscribe((data) => { this.router.navigate(['/users']); },
 					(error) => {
 				this.alertService.error(error);
 				this.loading = false;
