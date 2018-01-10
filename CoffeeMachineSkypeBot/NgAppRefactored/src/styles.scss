@@ -1,3 +1,7 @@
+/******** Imports ********/
+@import "styles/variables";
+@import '~bootstrap/scss/bootstrap';
+
 /* You can add global styles to this file, and also import other style files */
 *,
 *:before,
@@ -48,6 +52,13 @@ h4 {
     url('./assets/fonts/cornerstone.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.pointer {
+  cursor: pointer;
 }
 
 .btn {

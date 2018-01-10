@@ -1,0 +1,50 @@
+$sizes: (
+  10: 10%,
+  15: 15%,
+  20: 20%,
+  25: 25%,
+  30: 30%,
+  35: 35%,
+  40: 40%,
+  45: 45%,
+  50: 50%,
+  55: 55%,
+  60: 60%,
+  65: 65%,
+  70: 70%,
+  75: 75%,
+  80: 80%,
+  85: 85%,
+  90: 90%,
+  95: 95%,
+  100: 100%
+);
+
+/* Body */
+$body-bg: #fff;
+
+/* Colors definition */
+$color-black: #000;
+$color-white: #fff;
+$white: #fff;
+$black: #000;
+$red: #da291c;
+$dark-red: #e30613;
+$orange: #f39200;
+$yellow: #ffd500;
+$green: #77ba0f;
+$lime: #86bc25;
+$blue: #00a3e0;
+
+/* Links */
+$link-color: $blue;
+$link-hover-color: #0076a8;
+
+/* Site specific */
+$color-theme-black: #2f2f30;
+$color-theme-grey: #dee9ee;
+$color-theme-lightBlue: #def5ff;
+$color-theme-violet: #353535;
+$color-theme-darkviolet: #2a2a2a;
+$page-header-height: rem(64px);
+$sidenav-max-width: rem(210px);
