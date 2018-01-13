@@ -8,7 +8,6 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from '../login/login.module';
 
-
 const environment = {
   development: true,
   production: false,
